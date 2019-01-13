@@ -2,10 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { ConvoListComponent } from './convo-list/convo-list.component';
+import { ConversationComponent } from './conversation/conversation.component';
+import { ConvoSingleComponent } from './convo-single/convo-single.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConvoListComponent,
+    ConversationComponent,
+    ConvoSingleComponent
   ],
   imports: [
     BrowserModule

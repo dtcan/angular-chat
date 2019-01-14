@@ -24,31 +24,36 @@ export class ConvoListComponent implements OnInit {
 				id: 0,
 				title: "Contact 0",
 				subtitle: "Last message",
-				img: ""
+				img: "",
+				emphasis: "Unread"
 			},
 			{
 				id: 1,
 				title: "Contact 1",
 				subtitle: "Last message",
-				img: ""
+				img: "",
+				emphasis: "New!"
 			},
 			{
 				id: 2,
 				title: "Contact 2",
 				subtitle: "Last message",
-				img: ""
+				img: "",
+				emphasis: "Your text here"
 			},
 			{
 				id: 3,
 				title: "Contact 3",
 				subtitle: "Last message",
-				img: ""
+				img: "",
+				emphasis: null
 			},
 			{
 				id: 4,
 				title: "Contact 4",
 				subtitle: "Last message",
-				img: ""
+				img: "",
+				emphasis: null
 			}
 		];
 	}

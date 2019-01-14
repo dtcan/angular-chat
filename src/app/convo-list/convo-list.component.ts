@@ -7,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConvoListComponent implements OnInit {
 	
-	convos : object[];
+	activeId;
 	
-	constructor() {
-		this.convos = [
+	setActive(id) {
+		if(this.activeId === id) {
+			this.activeId = null;
+		}else {
+			this.activeId = id;
+		}
+	}
+	
+	getConvos() {
+		// Edit this according to your implementation
+		return [
 			{
 				id: 0,
 				title: "Contact 0",
@@ -42,6 +51,10 @@ export class ConvoListComponent implements OnInit {
 				img: ""
 			}
 		];
+	}
+	
+	constructor() {
+		this.activeId = null;
 	}
 	
 	ngOnInit() {

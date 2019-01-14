@@ -1,8 +1,15 @@
-<div class="row row-height">
-	<div class="no-padding col-4 scroll">
+<nav *ngIf="mobile" id="mobile-navbar" class="navbar-dark bg-primary">
+	<div class="container text-light"><div class="row">
+		<div class="col float-left align-self-center"><a *ngIf="messageScreen" (click)="showAlert('Back');" class="material-icons">arrow_back</a></div>
+		<div class="navbar-brand col-auto align-self-center"><i class="material-icons">message</i>&nbsp;{{ title }}</div>
+		<div class="col float-right align-self-center"><small></small></div>
+	</div></div>
+</nav>
+<div id="mobile-content" class="row">
+	<div *ngIf="(!messageScreen || !mobile)" class="no-padding {{ mobile ? 'col' : 'col-4' }} scroll">
 		<app-convo-list></app-convo-list>
 	</div>
-	<div class="no-padding col scroll">
+	<div *ngIf="(messageScreen || !mobile)" class="no-padding col scroll">
 		<app-conversation></app-conversation>
 	</div>
 </div>

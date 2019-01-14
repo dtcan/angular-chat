@@ -23,3 +23,7 @@
 	-ms-overflow-style: none !important;
 }
 /* END Independently Scrollable Bootstrap Columns */
+
+#mobile-navbar {
+	text-align: center;
+}

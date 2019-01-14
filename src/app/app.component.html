@@ -1,15 +1,15 @@
 <nav *ngIf="mobile" id="mobile-navbar" class="navbar-dark bg-dark">
 	<div class="container text-light"><div class="row">
-		<div class="col float-left align-self-center"><a *ngIf="messageScreen" (click)="showAlert('Back');" class="material-icons">arrow_back</a></div>
+		<div class="col float-left align-self-center"><a *ngIf="activeId() !== null" (click)="deselect()" class="material-icons">arrow_back</a></div>
 		<div class="navbar-brand col-auto align-self-center"><i class="material-icons">message</i>&nbsp;{{ title }}</div>
-		<div class="col float-right align-self-center"><small></small></div>
+		<div class="col float-right align-self-center">{{ activeId() }}</div>
 	</div></div>
 </nav>
 <div id="mobile-content" class="row">
-	<div *ngIf="(!messageScreen || !mobile)" class="no-padding {{ mobile ? 'col' : 'col-4' }} scroll">
+	<div class="no-padding{{ mobile ? ' col' : ' col-4' }} {{ (activeId() === null || !mobile) ? 'visible' : 'invisible' }} scroll">
 		<app-convo-list></app-convo-list>
 	</div>
-	<div *ngIf="(messageScreen || !mobile)" class="no-padding col scroll">
+	<div *ngIf="(activeId() !== null || !mobile)" class="no-padding col scroll">
 		<app-conversation></app-conversation>
 	</div>
 </div>

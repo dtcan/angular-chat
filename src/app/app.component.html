@@ -5,9 +5,9 @@
 		<div class="col float-right align-self-center">{{ activeId() }}</div>
 	</div></div>
 </nav>
-<div id="mobile-content" class="row full-height">
+<div id="mobile-content" class="row{{ !mobile ? ' full-height' : '' }}">
 	<div class="no-padding{{ mobile ? ' col' : ' col-4' }} {{ (activeId() === null || !mobile) ? 'visible' : 'no-display' }} scroll">
-		<app-convo-list></app-convo-list>
+		<app-convo-list [sanitizer]="sanitizer"></app-convo-list>
 	</div>
 	<div *ngIf="(activeId() !== null || !mobile)" class="col scroll">
 		<app-conversation></app-conversation>

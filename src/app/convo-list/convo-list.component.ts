@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { getConvos, getUserId } from '../requests'
 
 @Component({
   selector: 'app-convo-list',
   templateUrl: './convo-list.component.html',
-  styleUrls: ['./convo-list.component.css']
+  styleUrls: ['./convo-list.component.css'],
+  inputs: ['sanitizer']
 })
 export class ConvoListComponent implements OnInit {
 	
 	activeId;
+	sanitizer : DomSanitizer;
 	
 	setActive(id) {
 		if(this.activeId === id) {
@@ -17,45 +21,12 @@ export class ConvoListComponent implements OnInit {
 		}
 	}
 	
-	getConvos() {
-		// Edit this according to your implementation
-		return [
-			{
-				id: 0,
-				title: "Contact 0",
-				subtitle: "Last message",
-				img: "",
-				emphasis: "Unread"
-			},
-			{
-				id: 1,
-				title: "Contact 1",
-				subtitle: "Last message",
-				img: "",
-				emphasis: "New!"
-			},
-			{
-				id: 2,
-				title: "Contact 2",
-				subtitle: "Last message",
-				img: "",
-				emphasis: "Your text here"
-			},
-			{
-				id: 3,
-				title: "Contact 3",
-				subtitle: "Last message",
-				img: "",
-				emphasis: null
-			},
-			{
-				id: 4,
-				title: "Contact 4",
-				subtitle: "Last message",
-				img: "",
-				emphasis: null
-			}
-		];
+	getConvosFromRequest() {
+		let convos = getConvos(getUserId);
+		for (let con of convos) {
+			con.safeImg = this.sanitizer.bypassSecurityTrustUrl(con.img);
+		}
+		return convos;
 	}
 	
 	constructor() {

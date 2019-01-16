@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ConvoListComponent } from './convo-list/convo-list.component'
 
 @Component({
@@ -9,6 +10,7 @@ import { ConvoListComponent } from './convo-list/convo-list.component'
 export class AppComponent implements OnInit {
 	@ViewChild(ConvoListComponent) convos : ConvoListComponent;
 	title : string;
+	sanitizer : DomSanitizer;
 	
 	deselect() {
 		this.convos.setActive(null);
@@ -26,7 +28,8 @@ export class AppComponent implements OnInit {
 		this.mobile = (window.screen.width < 1024);
 	}
 	
-	constructor() {
+	constructor(sanitizer : DomSanitizer) {
 		this.title = 'AngularChat';
+		this.sanitizer = sanitizer;
 	}
 }

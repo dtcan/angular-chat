@@ -9,8 +9,6 @@ import { getConversation } from '../requests';
 })
 export class ConversationComponent {
 	
-	range(start, end) { return [...Array(1+end-start).keys()].map(v => start+v) }
-	
 	getConversationFromRequest() {
 		let con = getConversation(this.activeId);
 		for(let i in con) {

@@ -1,7 +1,7 @@
 <nav *ngIf="mobile" id="mobile-navbar" class="navbar-dark bg-dark">
 	<div class="container text-light"><div class="row">
 		<div class="col float-left align-self-center"><a *ngIf="activeId() !== null" (click)="deselect()" class="material-icons">arrow_back</a></div>
-		<div class="navbar-brand col-auto align-self-center"><i class="material-icons">message</i>&nbsp;{{ title }}</div>
+		<div class="navbar-brand col-auto align-self-center"><i class="material-icons text-primary">message</i>&nbsp;{{ title }}</div>
 		<div class="col float-right align-self-center">{{ activeId() }}</div>
 	</div></div>
 </nav>
@@ -10,6 +10,6 @@
 		<app-convo-list [sanitizer]="sanitizer"></app-convo-list>
 	</div>
 	<div *ngIf="(activeId() !== null || !mobile)" class="col scroll">
-		<app-conversation></app-conversation>
+		<app-conversation [activeId]="activeId()"></app-conversation>
 	</div>
 </div>

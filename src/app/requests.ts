@@ -2,6 +2,7 @@
 
 export function getConvos(userId) {
 	// Return a list of conversations available to the current user
+	// Conversations will be displayed as ordered here
 	
 	return [
 		{
@@ -40,6 +41,66 @@ export function getConvos(userId) {
 			emphasis: null
 		}
 	];
+}
+
+export function getConversation(id) {
+	// Return the messages in a conversation, given a unique identifier
+	// Messages will be displayed as ordered here
+	
+	return [
+		[
+			{
+				author: 'You',
+				content: 'Hello',
+				time: new Date() - 60000,
+				align: 'left'
+			},
+			{
+				author: 'Me',
+				content: 'Hey wassup',
+				time: new Date() - 30000,
+				align: 'right'
+			},
+			{
+				author: 'You',
+				content: 'This is a conversation',
+				time: new Date() - 10000,
+				align: 'left'
+			},
+			{
+				author: 'You',
+				content: 'You can even use emojis in it 😋',
+				time: new Date() - 5000,
+				align: 'left'
+			}
+		],
+		[
+			{
+				author: 'Friend 1',
+				content: 'Hello? Is anyone there?',
+				time: new Date() - 60000,
+				align: 'left'
+			},
+			{
+				author: 'Me',
+				content: 'Hey I\'m here',
+				time: new Date() - 30000,
+				align: 'right'
+			},
+			{
+				author: 'Friend 2',
+				content: 'Me too',
+				time: new Date() - 10000,
+				align: 'left'
+			},
+			{
+				author: 'Friend 3',
+				content: 'Yes I am here!!! 😃😃😃',
+				time: new Date() - 5000,
+				align: 'left'
+			}
+		]
+	][id];
 }
 
 export function getUserId() {

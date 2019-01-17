@@ -1,0 +1,8 @@
+<div class="mt-{{ conversation.inChain ? '1' : '2' }} row">
+	<div class="col">
+		<small *ngIf="!conversation.inChain" class="float-{{ conversation.align }} text-muted">{{ conversation.author }}</small><br *ngIf="!conversation.inChain" />
+		<div class="card float-{{ conversation.align }} {{ conversation.align === 'right' ? 'bg-primary text-light' : 'bg-light text-dark' }}">
+			<div class="card-body p-2">{{ conversation.content }}</div>
+		</div>
+	</div>
+</div>

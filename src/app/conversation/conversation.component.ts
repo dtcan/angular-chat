@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { getConversation } from '../requests';
 
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
-  styleUrls: ['./conversation.component.css']
+  styleUrls: ['./conversation.component.css'],
+  inputs: ['activeId']
 })
-export class ConversationComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class ConversationComponent {
+	
+	range(start, end) { return [...Array(1+end-start).keys()].map(v => start+v) }
+	
+	getConversationFromRequest() {
+		let con = getConversation(this.activeId);
+		for(let i in con) {
+			con[i].inChain = (i > 0 && con[i-1].author == con[i].author);
+		}
+		return con;
+	}
 }

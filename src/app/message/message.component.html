@@ -1,8 +1,14 @@
-<div class="mt-{{ conversation.inChain ? '1' : '2' }} row">
+<div class="mt-{{ message.inChain ? '1' : '2' }} ml-0 mr-0 row">
 	<div class="col">
-		<small *ngIf="!conversation.inChain" class="float-{{ conversation.align }} text-muted">{{ conversation.author }}</small><br *ngIf="!conversation.inChain" />
-		<div class="card float-{{ conversation.align }} {{ conversation.align === 'right' ? 'bg-primary text-light' : 'bg-light text-dark' }}">
-			<div class="card-body p-2">{{ conversation.content }}</div>
+		<div *ngIf="isActive" class="text-center text-muted"><small>{{ getDateStringFromRequest(message.time) }}</small><br /></div>
+		<span *ngIf="(message.author && !message.inChain)"><small class="float-{{ message.align }} text-muted">{{ message.author }}</small><br /></span>
+		<div style="max-width: 75%;" class="card float-{{ message.align }} {{ message.align === 'right' ? 'bg-primary text-light' : 'bg-light text-dark' }}">
+			<div class="card-body p-2">{{ message.content }}</div>
 		</div>
+	</div>
+</div>
+<div *ngIf="isActive" class="ml-0 mr-0 row">
+	<div class="col">
+		<small class="ml-1 mr-1 pb-2 float-{{ message.align }} text-muted">{{ message.subcontent }}</small>
 	</div>
 </div>

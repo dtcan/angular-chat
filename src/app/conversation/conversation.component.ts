@@ -9,6 +9,16 @@ import { getConversation } from '../requests';
 })
 export class ConversationComponent {
 	
+	activeMessage;
+	
+	setActive(id) {
+		if(this.activeMessage === id) {
+			this.activeMessage = null;
+		}else {
+			this.activeMessage = id;
+		}
+	}
+	
 	getConversationFromRequest() {
 		let con = getConversation(this.activeId);
 		for(let i in con) {

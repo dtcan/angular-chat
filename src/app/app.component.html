@@ -2,7 +2,7 @@
 	<div class="container text-light"><div class="row">
 		<div class="col float-left align-self-center"><a *ngIf="activeId() !== null" (click)="deselect()" class="material-icons">arrow_back</a></div>
 		<div class="navbar-brand col-auto align-self-center"><i class="material-icons text-primary">message</i>&nbsp;{{ title }}</div>
-		<div class="col float-right align-self-center">{{ activeId() }}</div>
+		<div class="col float-right align-self-center"></div>
 	</div></div>
 </nav>
 <div id="mobile-content" class="row{{ !mobile ? ' full-height' : '' }}">

@@ -12,10 +12,9 @@ import { getConvos, getUserId } from '../requests';
 export class ConvoListComponent implements OnInit {
 	
 	sanitizer : DomSanitizer;
+	mobile : boolean = false;
 	
-	onConversationChange() { }
-	
-	getConvosFromRequest() {
+	getConvosFromRequest() : object[] {
 		let convos = getConvos(getUserId);
 		for (let con of convos) {
 			con.safeImg = this.sanitizer.bypassSecurityTrustUrl(con.img);

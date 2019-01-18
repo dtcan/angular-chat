@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class SelectionService {
 	
-	activeConvo;
-	activeMessage;
+	activeConvo : any;
+	activeMessage : any;
 	
-	setActiveConvo(id) {
+	setActiveConvo(id) : void {
 		if(this.activeConvo === id) {
 			this.activeConvo = null;
 		}else {
@@ -17,7 +17,7 @@ export class SelectionService {
 		this.onConversationChange();
 	}
 	
-	setActiveMessage(id) {
+	setActiveMessage(id) : void {
 		if(this.activeMessage === id) {
 			this.activeMessage = null;
 		}else {
@@ -25,7 +25,7 @@ export class SelectionService {
 		}
 	}
 	
-	onConversationChange() {}
+	onConversationChange() : void {}
 	
 	constructor() {
 		this.activeConvo = null;

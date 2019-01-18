@@ -11,7 +11,7 @@ export class ConversationComponent {
 	
 	selection : SelectionService;
 	
-	getConversationFromRequest() {
+	getConversationFromRequest() : object[] {
 		let con = getConversation(this.selection.activeConvo);
 		for(let i in con) {
 			con[i].inChain = (i > 0 && con[i-1].author == con[i].author);

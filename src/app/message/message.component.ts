@@ -9,7 +9,7 @@ import { getDateString } from '../requests';
 })
 export class MessageComponent {
 	
-	getDateStringFromRequest(date) {
+	getDateStringFromRequest(date) : string {
 		return getDateString(date);
 	}
 	

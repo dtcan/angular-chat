@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConvoSingleComponent implements OnInit {
 	
+	mobile : boolean = false;
+	
 	ngOnInit() {
 		this.mobile = (window.screen.width < 1024);
 	}

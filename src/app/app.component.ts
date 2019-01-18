@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SelectionService } from './selection.service'
+import { SelectionService } from './selection.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +9,15 @@ import { SelectionService } from './selection.service'
 })
 export class AppComponent implements OnInit {
 	title : string;
+	mobile : boolean = false;
 	sanitizer : DomSanitizer;
 	selection : SelectionService;
 	
-	deselect() {
+	deselect() : void {
 		this.selection.setActiveConvo(null);
 	}
 	
-	onConversationChange() {
+	onConversationChange() : void {
 		this.selection.activeMessage = null;
 		setTimeout(() => $('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight()), 0);
 		setTimeout(() => $('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight), 0);

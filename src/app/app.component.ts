@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
 	
 	onConversationChange() {
 		this.selection.activeMessage = null;
+		setTimeout(() => $('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight()), 0);
 		setTimeout(() => $('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight), 0);
 	}
 	
@@ -26,6 +27,8 @@ export class AppComponent implements OnInit {
 		if(this.mobile) {
 			setTimeout(() => $('#mobile-content').css('padding-top', $('#mobile-navbar').height()), 0);
 		}
+		setTimeout(() => $('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight()), 0);
+		$(window).on('resize', (e) => $('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight()));
 	}
 	
 	constructor(sanitizer : DomSanitizer, selection : SelectionService) {

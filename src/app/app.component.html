@@ -5,11 +5,19 @@
 		<div class="col float-right align-self-center"></div>
 	</div></div>
 </nav>
-<div id="mobile-content" class="row full-height">
+<div id="mobile-content" class="row vh-100 m-0">
 	<div class="no-padding{{ mobile ? ' col' : ' col-4' }} {{ (selection.activeConvo === null || !mobile) ? 'visible' : 'no-display' }} scroll">
 		<app-convo-list [sanitizer]="sanitizer"></app-convo-list>
 	</div>
-	<div id="conversation-view" *ngIf="(selection.activeConvo !== null || !mobile)" class="col scroll">
-		<app-conversation></app-conversation>
+	<div *ngIf="(selection.activeConvo !== null || !mobile)" class="col h-100 p-0">
+		<div id="conversation-view" class="scroll">
+			<app-conversation></app-conversation>
+		</div>
+		<div id="text-input-div" class="w-100 p-2 m-0 bg-light input-group{{ mobile ? ' fixed-bottom' : '' }}">
+			<input id="text-input" type="text" class="form-control" placeholder="Say something..." />
+			<div class="input-group-append">
+				<span class="input-group-text bg-primary text-light"><i class="material-icons">send</i></span>
+			</div>
+		</div>
 	</div>
 </div>

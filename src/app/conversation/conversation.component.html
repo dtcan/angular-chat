@@ -1,3 +1,4 @@
 <div *ngFor="let message of getConversationFromRequest()" (click)="selection.setActiveMessage(message.id)">
 	<app-message [message]="message" [isActive]="message.id === selection.activeMessage"></app-message>
 </div>
+<div class="p-4"></div>

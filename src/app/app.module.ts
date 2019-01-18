@@ -6,6 +6,7 @@ import { ConvoListComponent } from './convo-list/convo-list.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { ConvoSingleComponent } from './convo-single/convo-single.component';
 import { MessageComponent } from './message/message.component';
+import { SelectionService } from './selection.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { MessageComponent } from './message/message.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [SelectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -16,3 +16,7 @@ body {
 .full-height {
 	height: 100vh;
 }
+
+.ellipsis {
+	text-overflow: ellipsis;
+}

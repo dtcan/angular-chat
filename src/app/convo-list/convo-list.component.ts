@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { getConvos, getUserId } from '../requests'
+import { SelectionService } from '../selection.service';
+import { getConvos, getUserId } from '../requests';
 
 @Component({
   selector: 'app-convo-list',
@@ -10,16 +11,9 @@ import { getConvos, getUserId } from '../requests'
 })
 export class ConvoListComponent implements OnInit {
 	
-	activeId;
 	sanitizer : DomSanitizer;
 	
-	setActive(id) {
-		if(this.activeId === id) {
-			this.activeId = null;
-		}else {
-			this.activeId = id;
-		}
-	}
+	onConversationChange() { }
 	
 	getConvosFromRequest() {
 		let convos = getConvos(getUserId);
@@ -29,9 +23,7 @@ export class ConvoListComponent implements OnInit {
 		return convos;
 	}
 	
-	constructor() {
-		this.activeId = null;
-	}
+	constructor(private selection : SelectionService) { }
 	
 	ngOnInit() {
 		this.mobile = (window.screen.width < 1024);

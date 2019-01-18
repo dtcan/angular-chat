@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 	ngOnInit() {
 		this.mobile = (window.screen.width < 1024);
 		if(this.mobile) {
-			setTimeout(() => $('#mobile-content').css('margin-top', $('#mobile-navbar').height()), 0);
+			setTimeout(() => $('#mobile-content').css('padding-top', $('#mobile-navbar').height()), 0);
 		}
 	}
 	

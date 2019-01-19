@@ -2,8 +2,9 @@
 	<div class="col">
 		<div *ngIf="isActive" class="text-center text-muted"><small>{{ getDateStringFromRequest(message.time) }}</small><br /></div>
 		<span *ngIf="(message.author && !message.inChain)"><small class="float-{{ message.align }} text-muted">{{ message.author }}</small><br /></span>
-		<div style="max-width: 75%;" class="card float-{{ message.align }} {{ message.align === 'right' ? 'bg-primary text-light' : 'bg-light text-dark' }}">
-			<div class="card-body p-2">{{ message.content }}</div>
+		<div style="max-width: 75%;" class="{{ getMessageStyle(message) }}">
+			<h1 *ngIf="isEmoji(message.content)">{{ message.content }}</h1>
+			<div *ngIf="!isEmoji(message.content)" class="card-body p-2">{{ message.content }}</div>
 		</div>
 	</div>
 </div>

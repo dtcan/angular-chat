@@ -118,13 +118,21 @@ export function getConversation(id) : object[] {
 			{
 				id: 4,
 				author: 'Friend 3',
-				content: 'Yes I am here!!! 😃😃😃',
+				content: 'Yes I am here!!!',
 				subcontent: 'Seen by everyone except Friend 1',
 				time: new Date(new Date() - 10000),
 				align: 'left'
 			},
 			{
 				id: 5,
+				author: 'Friend 3',
+				content: '😃😃😃',
+				subcontent: 'Seen by everyone except Friend 1',
+				time: new Date(new Date() - 9000),
+				align: 'left'
+			},
+			{
+				id: 6,
 				author: '',
 				content: 'Looks like group chats are working fine in this UI! 👍',
 				subcontent: 'Seen by Friend 3',

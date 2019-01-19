@@ -7,7 +7,7 @@
 </nav>
 <div id="mobile-content" class="row vh-100 m-0">
 	<div class="no-padding{{ mobile ? ' col' : ' col-4' }} {{ (selection.activeConvo === null || !mobile) ? 'visible' : 'no-display' }} scroll">
-		<app-convo-list [sanitizer]="sanitizer"></app-convo-list>
+		<app-convo-list></app-convo-list>
 	</div>
 	<div *ngIf="(selection.activeConvo !== null || !mobile)" class="col h-100 p-0">
 		<div id="conversation-view" class="scroll">

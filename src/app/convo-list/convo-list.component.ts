@@ -1,28 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { SelectionService } from '../selection.service';
-import { getConvos, getUserId } from '../requests';
+import { RequestService } from '../request.service';
 
 @Component({
   selector: 'app-convo-list',
   templateUrl: './convo-list.component.html',
-  styleUrls: ['./convo-list.component.css'],
-  inputs: ['sanitizer']
+  styleUrls: ['./convo-list.component.css']
 })
 export class ConvoListComponent implements OnInit {
 	
-	sanitizer : DomSanitizer;
+	selection : SelectionService;
+	request : RequestService;
 	mobile : boolean = false;
 	
-	getConvosFromRequest() : object[] {
-		let convos = getConvos(getUserId);
-		for (let con of convos) {
-			con.safeImg = this.sanitizer.bypassSecurityTrustUrl(con.img);
-		}
-		return convos;
+	constructor(selection : SelectionService, request : RequestService) {
+		this.selection = selection;
+		this.request = request;
 	}
-	
-	constructor(private selection : SelectionService) { }
 	
 	ngOnInit() {
 		this.mobile = (window.screen.width < 1024);

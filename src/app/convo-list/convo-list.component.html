@@ -1,5 +1,5 @@
 <ul class="no-padding list-group-flush">
-	<li *ngFor="let convo of getConvosFromRequest()" class="list-group-item{{ mobile ? ' convo-padded' : '' }}{{ selection.activeConvo === convo.id ? ' active' : '' }}" (click)="selection.setActiveConvo(convo.id)">
+	<li *ngFor="let convo of request.getConvosFromRequest()" class="list-group-item{{ mobile ? ' convo-padded' : '' }}{{ selection.activeConvo === convo.id ? ' active' : '' }}" (click)="selection.setActiveConvo(convo.id)">
 		<app-convo-single [convo]='convo'></app-convo-single>
 	</li>
 </ul>

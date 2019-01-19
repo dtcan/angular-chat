@@ -1,5 +1,11 @@
 // Edit these functions according to your implementation
 
+export function getUserId() : any {
+	// Return the id of the user currently logged in
+	
+	return 'me';
+}
+
 export function getConvos(userId) : object[] {
 	// Return a list of conversations available to the current user
 	// Conversations will be displayed as ordered here
@@ -213,10 +219,4 @@ export function getDateString(date) : string {
 	// Return a string to display the Date object to the user
 	
 	return date.toLocaleString();
-}
-
-export function getUserId() : any {
-	// Return the id of the user currently logged in
-	
-	return 'me';
 }

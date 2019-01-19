@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectionService } from '../selection.service';
-import { getConversation } from '../requests';
+import { RequestService } from '../request.service';
 
 @Component({
   selector: 'app-conversation',
@@ -10,17 +10,11 @@ import { getConversation } from '../requests';
 export class ConversationComponent {
 	
 	selection : SelectionService;
+	request : RequestService;
 	
-	getConversationFromRequest() : object[] {
-		let con = getConversation(this.selection.activeConvo);
-		for(let i in con) {
-			con[i].inChain = (i > 0 && con[i-1].author == con[i].author);
-		}
-		return con;
-	}
-	
-	constructor(selection : SelectionService) {
+	constructor(selection : SelectionService, request : RequestService) {
 		this.selection = selection;
+		this.request = request;
 	}
 	
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { onConvoSelect } from './requests.ts';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,12 @@ export class SelectionService {
 	activeConvo : any;
 	activeMessage : any;
 	
-	setActiveConvo(id) : void {
-		if(this.activeConvo === id) {
+	setActiveConvo(convo) : void {
+		onConvoSelect(convo);
+		if(this.activeConvo === convo.id) {
 			this.activeConvo = null;
 		}else {
-			this.activeConvo = id;
+			this.activeConvo = convo.id;
 		}
 		this.onConversationChange();
 	}

@@ -1,7 +1,7 @@
 // This section is specially for the test display (you don't need it!)
 // Scroll down to see the functions you need to include
 
-let lastRead = [3,6,7,0];
+let lastRead = [0,0,0,0];
 let lastChecked = [3,6,7,0];
 
 let testConversations = [
@@ -179,6 +179,15 @@ let testConversations = [
 
 // Edit the functions below according to your implementation
 
+export function onConvoSelect(convo : object) : void {
+	// Called when a conversation is selected in the conversation list
+	// convo: a client-side representation of the conversation, which the same attributes as given in getConvos
+	
+	if(convo.id !== 4) {
+		convo.emphasis = null;
+	}
+}
+
 export function getUserId() : any {
 	// Return the id of the user currently logged in
 	
@@ -195,21 +204,21 @@ export function getConvos(userId) : object[] {
 			title: "You",
 			subtitle: (testConversations[0][testConversations[0].length - 1].author ? '' : 'You: ') + testConversations[0][testConversations[0].length - 1].content,
 			img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==",
-			emphasis: "New!"
+			emphasis: (lastRead[0] < testConversations[0].length - 1 ? 'Unread' : null)
 		},
 		{
 			id: 1,
 			title: "Group Chat",
 			subtitle: (testConversations[1][testConversations[1].length - 1].author ? testConversations[1][testConversations[1].length - 1].author : 'You') + ': ' + testConversations[1][testConversations[1].length - 1].content,
 			img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==",
-			emphasis: "Your text here"
+			emphasis: (lastRead[1] < testConversations[1].length - 1 ? 'New!' : null)
 		},
 		{
 			id: 2,
 			title: "Friendo",
 			subtitle: (testConversations[2][testConversations[2].length - 1].author ? '' : 'You: ') + testConversations[2][testConversations[2].length - 1].content,
 			img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==",
-			emphasis: null
+			emphasis: (lastRead[2] < testConversations[2].length - 1 ? 'Your text here' : null)
 		},
 		{
 			id: 3,
@@ -223,7 +232,7 @@ export function getConvos(userId) : object[] {
 			title: "Test Conversation",
 			subtitle: (new Date()).toLocaleString(),
 			img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==",
-			emphasis: "Unread"
+			emphasis: "This convo is special"
 		}
 	];
 }

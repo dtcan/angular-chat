@@ -28,7 +28,10 @@ export class RequestService {
 	}
 	
 	getConversationFromRequest(activeConvo : any, forceUpdate : boolean = false) : object[] {
-		if(activeConvo !== null && (this.lastConversationId !== activeConvo || forceUpdate)) {
+		if(activeConvo === null) {
+			this.lastConversationId = null;
+			this.lastConversation = [];
+		}else if(this.lastConversationId !== activeConvo || forceUpdate) {
 			this.lastConversationId = activeConvo;
 			let conversation = getConversation(activeConvo);
 			for(let i in conversation) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { getUserId, getConvos, getConversation, getDateString } from './requests';
+import { getUserId, getConvos, getConversation, getDateString, sendMessage, shouldUpdate } from './requests';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class RequestService {
 		let userId = getUserId();
 		if(this.lastUser !== userId || forceUpdate) {
 			this.lastUser = userId;
-			this.lastConvos = getConvos(getUserId());
+			this.lastConvos = getConvos(userId);
 			for (let convo of this.lastConvos) {
 				convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
 			}
@@ -28,7 +28,7 @@ export class RequestService {
 	}
 	
 	getConversationFromRequest(activeConvo : any, forceUpdate : boolean = false) : object[] {
-		if(this.lastConversationId !== activeConvo || forceUpdate) {
+		if(activeConvo !== null && (this.lastConversationId !== activeConvo || forceUpdate)) {
 			this.lastConversationId = activeConvo;
 			let conversation = getConversation(activeConvo);
 			for(let i in conversation) {
@@ -42,6 +42,14 @@ export class RequestService {
 	
 	getDateStringFromRequest(date : any) : string {
 		return getDateString(date);
+	}
+	
+	sendMessageFromRequest(message : string, conversationId : any) : boolean {
+		return sendMessage(message, conversationId);
+	}
+	
+	shouldUpdateFromRequest() : boolean {
+		return shouldUpdate(getUserId());
 	}
 	
 	constructor(sanitizer : DomSanitizer) {

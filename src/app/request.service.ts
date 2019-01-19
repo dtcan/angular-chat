@@ -9,23 +9,38 @@ export class RequestService {
 	
 	sanitizer : DomSanitizer;
 	
-	getConvosFromRequest() : object[] {
-		let convos = getConvos(getUserId());
-		for (let con of convos) {
-			con.safeImg = this.sanitizer.bypassSecurityTrustUrl(con.img);
+	lastUser : any;
+	lastConvos : object[];
+	lastConversationId : any;
+	lastConversation : object[];
+	
+	getConvosFromRequest(forceUpdate : boolean = false) : object[] {
+		let userId = getUserId();
+		if(this.lastUser !== userId || forceUpdate) {
+			this.lastUser = userId;
+			this.lastConvos = getConvos(getUserId());
+			for (let convo of this.lastConvos) {
+				convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
+			}
 		}
-		return convos;
+		
+		return this.lastConvos;
 	}
 	
-	getConversationFromRequest(activeConvo) : object[] {
-		let con = getConversation(activeConvo);
-		for(let i in con) {
-			con[i].inChain = (i > 0 && con[i-1].author == con[i].author);
+	getConversationFromRequest(activeConvo : any, forceUpdate : boolean = false) : object[] {
+		if(this.lastConversationId !== activeConvo || forceUpdate) {
+			this.lastConversationId = activeConvo;
+			let conversation = getConversation(activeConvo);
+			for(let i in conversation) {
+				conversation[i].inChain = (i > 0 && conversation[i-1].author == conversation[i].author);
+			}
+			this.lastConversation = conversation;
 		}
-		return con;
+		
+		return this.lastConversation;
 	}
 	
-	getDateStringFromRequest(date) : string {
+	getDateStringFromRequest(date : any) : string {
 		return getDateString(date);
 	}
 	

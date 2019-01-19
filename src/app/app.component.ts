@@ -10,7 +10,6 @@ import { SelectionService } from './selection.service';
 export class AppComponent implements OnInit {
 	title : string;
 	mobile : boolean = false;
-	sanitizer : DomSanitizer;
 	selection : SelectionService;
 	
 	deselect() : void {
@@ -32,9 +31,8 @@ export class AppComponent implements OnInit {
 		$(window).on('resize', (e) => $('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight()));
 	}
 	
-	constructor(sanitizer : DomSanitizer, selection : SelectionService) {
+	constructor(selection : SelectionService) {
 		this.title = 'AngularChat';
-		this.sanitizer = sanitizer;
 		this.selection = selection;
 		this.selection.onConversationChange = this.onConversationChange.bind(this);
 	}

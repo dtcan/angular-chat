@@ -10,11 +10,15 @@ export class SelectionService {
 	activeMessage : any;
 	
 	setActiveConvo(convo) : void {
-		onConvoSelect(convo);
-		if(this.activeConvo === convo.id) {
+		if(convo === null) {
 			this.activeConvo = null;
 		}else {
-			this.activeConvo = convo.id;
+			onConvoSelect(convo);
+			if(this.activeConvo === convo.id) {
+				this.activeConvo = null;
+			}else {
+				this.activeConvo = convo.id;
+			}
 		}
 		this.onConversationChange();
 	}

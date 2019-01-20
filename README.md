@@ -2,7 +2,7 @@
 
 A simple instant messaging interface made using Angular.
 
-**WARNING**: This project is incomplete, do not use this yet!
+The project is in a useable state, but I wouldn't recommended using it in production until I add pagination (and infinite scrolling) to the conversation view.
 
 ## Development server
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { onConvoSelect } from './requests.ts';
+import { onConvoSelect } from './requests';
 
 @Injectable({
   providedIn: 'root'

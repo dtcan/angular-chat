@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { getUserId, getConvos, getConversation, getDateString, sendMessage, shouldUpdate } from './requests';
+import { getPlaceholderText, getUserId, getConvos, getConversation, getDateString, sendMessage, shouldUpdate } from './requests';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,14 @@ export class RequestService {
 	lastConvos : object[];
 	lastConversationId : any;
 	lastConversation : object[];
+	
+	getPlaceholderFromRequest(conversationId : any) : string {
+		if(conversationId !== null) {
+			return getPlaceholderText(conversationId);
+		}
+		
+		return "";
+	}
 	
 	getConvosFromRequest(forceUpdate : boolean = false) : object[] {
 		let userId = getUserId();

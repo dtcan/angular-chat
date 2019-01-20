@@ -14,7 +14,7 @@
 			<app-conversation></app-conversation>
 		</div>
 		<div *ngIf="selection.activeConvo !== null" id="text-input-div" class="w-100 p-2 m-0 bg-light input-group{{ mobile ? ' fixed-bottom' : '' }}">
-			<input id="message-input" type="text" class="form-control" placeholder="Say something..." />
+			<input id="message-input" type="text" class="form-control" placeholder="{{ request.getPlaceholderFromRequest(selection.activeConvo) }}" />
 			<div class="input-group-append" (click)="strInput()">
 				<span class="input-group-text bg-primary text-light"><i class="material-icons">send</i></span>
 			</div>

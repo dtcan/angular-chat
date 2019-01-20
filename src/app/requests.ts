@@ -3,6 +3,7 @@
 
 let lastRead = [0,0,0,0];
 let lastChecked = [3,6,7,0];
+let parrotTyping = false;
 
 let testConversations = [
 	[
@@ -166,8 +167,8 @@ let testConversations = [
 	[
 		{
 			id: 0,
-			author: 'ParrotBot',
-			content: 'Say anything, and I\'ll repeat it back to you!',
+			author: '💬 ParrotBot',
+			content: 'Say anything, and I\'ll repeat it back to you! Please be patient, it will take me a few seconds to reply.',
 			subcontent: 'Seen',
 			time: new Date(),
 			align: 'left'
@@ -181,10 +182,20 @@ let testConversations = [
 
 export function onConvoSelect(convo : object) : void {
 	// Called when a conversation is selected in the conversation list
-	// convo: a client-side representation of the conversation, which the same attributes as given in getConvos
+	// convo: a client-side representation of the conversation, which has the same attributes as given in getConvos
 	
 	if(convo.id !== 4) {
 		convo.emphasis = null;
+	}
+}
+
+export function getPlaceholderText(conversationId : any) : string {
+	// Return text to display in the input text box
+	
+	if(conversationId === 3 && parrotTyping) {
+		return 'ParrotBot is typing...';
+	}else {
+		return 'Say something...';
 	}
 }
 
@@ -222,8 +233,8 @@ export function getConvos(userId) : object[] {
 		},
 		{
 			id: 3,
-			title: "ParrotBot",
-			subtitle: (testConversations[3][testConversations[3].length - 1].author ? '' : 'You: ') + testConversations[3][testConversations[3].length - 1].content,
+			title: "💬 ParrotBot",
+			subtitle: (parrotTyping ? 'ParrotBot is typing...' : (testConversations[3][testConversations[3].length - 1].author ? '' : 'You: ') + testConversations[3][testConversations[3].length - 1].content),
 			img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==",
 			emphasis: (lastRead[3] < testConversations[3].length - 1 ? 'New Message' : null)
 		},
@@ -243,13 +254,13 @@ export function getConversation(id) : object[] {
 	
 	if(id === 4) {
 		let arr = [];
-		for(var i = 1; i <= 50; i++) {
+		for(var i = 50; i >= 1; i--) {
 			arr.push({
 				id: i,
 				author: '',
 				content: 'This is Message ' + i,
 				subcontent: 'Message ' + i,
-				time: new Date(0),
+				time: i,
 				align: 'right'
 			});
 		}
@@ -264,7 +275,11 @@ export function getConversation(id) : object[] {
 export function getDateString(date) : string {
 	// Return a string to display the Date object to the user
 	
-	return date.toLocaleString();
+	if(date.toUTCString) {
+		return date.toLocaleString();
+	}else {
+		return date + ' day' + (date === 1 ? '' : 's') + ' ago';
+	}
 }
 
 export function sendMessage(message : string, conversationId : any) : boolean {
@@ -276,19 +291,22 @@ export function sendMessage(message : string, conversationId : any) : boolean {
 			id: testConversations[conversationId].length,
 			author: '',
 			content: message,
-			subcontent: 'Seen',
+			subcontent: 'Sent',
 			time: new Date(),
 			align: 'right'
 		});
+		setTimeout(() => { testConversations[conversationId][testConversations[conversationId].length - 1].subcontent = 'Delivered'; lastChecked[conversationId] = 0; }, 1000);
 		if(conversationId === 3) {
-			setTimeout(() => testConversations[conversationId].push({
-				id: testConversations[conversationId].length,
+			setTimeout(() => { testConversations[3][testConversations[3].length - 1].subcontent = 'Seen'; lastChecked[3] = 0; }, 3000);
+			setTimeout(() => { parrotTyping = true; lastChecked[3] = 0; }, 5000);
+			setTimeout(() => { testConversations[3].push({
+				id: testConversations[3].length,
 				author: 'ParrotBot',
-				content: "You just said: '" + message + "'",
+				content: "Squawk! You just said: '" + message + "'",
 				subcontent: 'Seen',
 				time: new Date(),
 				align: 'left'
-			}), 5000);
+			}); parrotTyping = false; }, 8000);
 		}
 	}else {
 		return false;

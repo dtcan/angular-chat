@@ -40,10 +40,14 @@ export class AppComponent implements OnInit {
 		$('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight);
 	}
 	
+	fixViewHeight() : void {
+		$('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight());
+	}
+	
 	onConversationChange() : void {
 		this.selection.activeMessage = null;
 		$('#message-input').val('');
-		setTimeout(() => $('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight()), 0);
+		setTimeout(this.fixViewHeight, 0);
 		setTimeout(this.scrollDown, 0);
 	}
 	
@@ -52,8 +56,8 @@ export class AppComponent implements OnInit {
 		if(this.mobile) {
 			setTimeout(() => $('#mobile-content').css('padding-top', $('#mobile-navbar').height()), 0);
 		}
-		setTimeout(() => $('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight()), 0);
-		$(window).on('resize', (e) => $('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight()));
+		setTimeout(this.fixViewHeight, 0);
+		$(window).on('resize', this.fixViewHeight);
 		setInterval(this.update.bind(this), 1000);
 	}
 	

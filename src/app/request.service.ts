@@ -27,13 +27,17 @@ export class RequestService {
 		let userId = getUserId();
 		if(this.lastUser !== userId || forceUpdate) {
 			this.lastUser = userId;
-			this.lastConvos = getConvos(userId);
-			for (let convo of this.lastConvos) {
-				convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
-			}
+			getConvos(this.getConvosCallback.bind(this), userId);
 		}
 		
 		return this.lastConvos;
+	}
+	
+	getConvosCallback(convos : object[]) : void {
+		this.lastConvos = convos;
+		for (let convo of this.lastConvos) {
+			convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
+		}
 	}
 	
 	getConversationFromRequest(activeConvo : any, forceUpdate : boolean = false) : object[] {
@@ -43,20 +47,26 @@ export class RequestService {
 		}else if(this.lastConversationId !== activeConvo || forceUpdate) {
 			this.lastConversationId = activeConvo;
 			this.lastConversationPage = 0;
-			let conversation = getConversation(getUserId(), activeConvo, this.lastConversationPage);
-			for(let i in conversation) {
-				conversation[i].inChain = (i > 0 && conversation[i-1].author == conversation[i].author);
-			}
-			this.lastConversation = conversation;
+			getConversation(this.getConversationCallback.bind(this), getUserId(), activeConvo, this.lastConversationPage);
 		}
 		
 		return this.lastConversation;
 	}
 	
+	getConversationCallback(conversation : object[]) : void {
+		for(let i in conversation) {
+			conversation[i].inChain = (i > 0 && conversation[i-1].author == conversation[i].author);
+		}
+		this.lastConversation = conversation;
+	}
+	
 	loadNextConversationFromRequest() : void {
 		this.lastConversationPage++;
+		getConversation(this.loadNextConversationCallback.bind(this), getUserId(), this.lastConversationId, this.lastConversationPage);
+	}
+	
+	loadNextConversationCallback(conversation : object[]) : void {
 		let distance = $('#conversation-view')[0].scrollHeight - $('#conversation-view').scrollTop();
-		let conversation = getConversation(getUserId(), this.lastConversationId, this.lastConversationPage);
 		for(let m of conversation.reverse()) {
 			this.lastConversation.unshift(m);
 		}

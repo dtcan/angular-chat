@@ -248,11 +248,11 @@ export function getConvos(userId) : object[] {
 	];
 }
 
-export function getConversation(id, pageNum) : object[] {
+export function getConversation(userId, conversationId, pageNum) : object[] {
 	// Return the messages in a conversation, given a unique identifier
 	// Messages will be displayed as ordered here
 	
-	if(id === 4) {
+	if(conversationId === 4) {
 		let arr = [];
 		for(var i = 50; i >= 1; i--) {
 			arr.push({
@@ -266,8 +266,8 @@ export function getConversation(id, pageNum) : object[] {
 		}
 		return arr;
 	}else if(pageNum === 0) {
-		lastRead[id] = testConversations[id].length - 1;
-		return $.extend(true, [], testConversations[id]);
+		lastRead[conversationId] = testConversations[conversationId].length - 1;
+		return $.extend(true, [], testConversations[conversationId]);
 	}
 	
 	return [];

@@ -43,7 +43,7 @@ export class RequestService {
 		}else if(this.lastConversationId !== activeConvo || forceUpdate) {
 			this.lastConversationId = activeConvo;
 			this.lastConversationPage = 0;
-			let conversation = getConversation(activeConvo, this.lastConversationPage);
+			let conversation = getConversation(getUserId(), activeConvo, this.lastConversationPage);
 			for(let i in conversation) {
 				conversation[i].inChain = (i > 0 && conversation[i-1].author == conversation[i].author);
 			}
@@ -56,7 +56,7 @@ export class RequestService {
 	loadNextConversationFromRequest() : void {
 		this.lastConversationPage++;
 		let distance = $('#conversation-view')[0].scrollHeight - $('#conversation-view').scrollTop();
-		let conversation = getConversation(this.lastConversationId, this.lastConversationPage);
+		let conversation = getConversation(getUserId(), this.lastConversationId, this.lastConversationPage);
 		for(let m of conversation.reverse()) {
 			this.lastConversation.unshift(m);
 		}

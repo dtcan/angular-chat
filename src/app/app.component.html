@@ -10,7 +10,7 @@
 		<app-convo-list></app-convo-list>
 	</div>
 	<div *ngIf="(selection.activeConvo !== null || !mobile)" class="col h-100 p-0">
-		<div id="conversation-view" class="scroll">
+		<div infinite-scroll [scrollWindow]="false" [infiniteScrollUpDistance]="3" (scrolledUp)="getNextPage()" id="conversation-view" class="scroll">
 			<app-conversation></app-conversation>
 		</div>
 		<div *ngIf="selection.activeConvo !== null" id="text-input-div" class="w-100 p-2 m-0 bg-light input-group{{ mobile ? ' fixed-bottom' : '' }}">

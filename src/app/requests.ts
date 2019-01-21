@@ -248,7 +248,7 @@ export function getConvos(userId) : object[] {
 	];
 }
 
-export function getConversation(id) : object[] {
+export function getConversation(id, pageNum) : object[] {
 	// Return the messages in a conversation, given a unique identifier
 	// Messages will be displayed as ordered here
 	
@@ -256,20 +256,21 @@ export function getConversation(id) : object[] {
 		let arr = [];
 		for(var i = 50; i >= 1; i--) {
 			arr.push({
-				id: i,
+				id: (50 * pageNum) + i,
 				author: '',
-				content: 'This is Message ' + i,
-				subcontent: 'Message ' + i,
-				time: i,
+				content: 'This is Message ' + ((50 * pageNum) + i),
+				subcontent: 'Message ' + ((50 * pageNum) + i),
+				time: ((50 * pageNum) + i),
 				align: 'right'
 			});
 		}
 		return arr;
-	}else {
+	}else if(pageNum === 0) {
 		lastRead[id] = testConversations[id].length - 1;
+		return $.extend(true, [], testConversations[id]);
 	}
 	
-	return $.extend(true, [], testConversations[id]);
+	return [];
 }
 
 export function getDateString(date) : string {
@@ -315,7 +316,7 @@ export function sendMessage(message : string, conversationId : any) : boolean {
 	return true;
 }
 
-export function shouldUpdate() : boolean {
+export function shouldUpdate(userId : any) : boolean {
 	// Return true if the UI needs to be updated with new information (ie. messages)
 	
 	for(let i in testConversations) {

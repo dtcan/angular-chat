@@ -12,6 +12,7 @@ export class RequestService {
 	lastUser : any;
 	lastConvos : object[];
 	lastConversationId : any;
+	lastConversationPage : int = 0;
 	lastConversation : object[];
 	
 	getPlaceholderFromRequest(conversationId : any) : string {
@@ -41,7 +42,8 @@ export class RequestService {
 			this.lastConversation = [];
 		}else if(this.lastConversationId !== activeConvo || forceUpdate) {
 			this.lastConversationId = activeConvo;
-			let conversation = getConversation(activeConvo);
+			this.lastConversationPage = 0;
+			let conversation = getConversation(activeConvo, this.lastConversationPage);
 			for(let i in conversation) {
 				conversation[i].inChain = (i > 0 && conversation[i-1].author == conversation[i].author);
 			}
@@ -49,6 +51,16 @@ export class RequestService {
 		}
 		
 		return this.lastConversation;
+	}
+	
+	loadNextConversationFromRequest() : void {
+		this.lastConversationPage++;
+		let distance = $('#conversation-view')[0].scrollHeight - $('#conversation-view').scrollTop();
+		let conversation = getConversation(this.lastConversationId, this.lastConversationPage);
+		for(let m of conversation.reverse()) {
+			this.lastConversation.unshift(m);
+		}
+		setTimeout(() => $('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight - distance), 0);
 	}
 	
 	getDateStringFromRequest(date : any) : string {

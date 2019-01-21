@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+
 import { SelectionService } from './selection.service';
 import { RequestService } from './request.service';
 
 @Component({
   selector: 'app-root',
+  directives: [InfiniteScrollDirective],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -34,6 +37,10 @@ export class AppComponent implements OnInit {
 			this.request.getConversationFromRequest(this.selection.activeConvo, true);
 			this.request.getConvosFromRequest(true);
 		}
+	}
+	
+	getNextPage() : void {
+		this.request.loadNextConversationFromRequest();
 	}
 	
 	scrollDown() : void {

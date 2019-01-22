@@ -205,7 +205,7 @@ export function getUserId() : any {
 	return 'me';
 }
 
-export function getConvos(callback, userId) : object[] {
+export function getConvos(callback, userId) : void {
 	// Call callback, with a list of conversations available to the current user as a parameter
 	// Conversations will be displayed as ordered here
 	
@@ -248,7 +248,7 @@ export function getConvos(callback, userId) : object[] {
 	]);
 }
 
-export function getConversation(callback, userId, conversationId, pageNum) : object[] {
+export function getConversation(callback, userId, conversationId, pageNum) : void {
 	// Call callback, with a list of the messages in the requested conversation as a parameter
 	// Messages will be displayed as ordered here
 	

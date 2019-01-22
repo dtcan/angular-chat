@@ -12,7 +12,7 @@ export class RequestService {
 	lastUser : any;
 	lastConvos : object[];
 	lastConversationId : any;
-	lastConversationPage : int = 0;
+	lastConversationPage : number = 0;
 	lastConversation : object[];
 	
 	getPlaceholderFromRequest(conversationId : any) : string {
@@ -45,19 +45,41 @@ export class RequestService {
 			this.lastConversationId = null;
 			this.lastConversation = [];
 		}else if(this.lastConversationId !== activeConvo || forceUpdate) {
-			this.lastConversationId = activeConvo;
 			this.lastConversationPage = 0;
-			getConversation(this.getConversationCallback.bind(this), getUserId(), activeConvo, this.lastConversationPage);
+			getConversation(((c) => this.getConversationCallback(c, this.lastConversationId !== activeConvo)).bind(this), getUserId(), activeConvo, this.lastConversationPage);
+			this.lastConversationId = activeConvo;
 		}
 		
 		return this.lastConversation;
 	}
 	
-	getConversationCallback(conversation : object[]) : void {
+	getConversationCallback(conversation : object[], noKeep : boolean) : void {
 		for(let i in conversation) {
-			conversation[i].inChain = (i > 0 && conversation[i-1].author == conversation[i].author);
+			conversation[i].inChain = (+i > 0 && conversation[i-1].author == conversation[i].author);
 		}
-		this.lastConversation = conversation;
+		
+		if(this.lastConversation.length === 0 || noKeep) {
+			this.lastConversation = conversation;
+			console.log("reset");
+			return;
+		}
+		
+		let index : number = 0;
+		for(let i in conversation) {
+			if(conversation[i].id === this.lastConversation[this.lastConversation.length - 1].id) {
+				index = +i;
+				break;
+			}
+		}
+		
+		console.log("---");
+		for(let i in conversation) {
+			if(+i <= index) {
+				this.lastConversation[this.lastConversation.length + (i - index) - 1] = conversation[i];
+			}else {
+				this.lastConversation.push(conversation[i]);
+			}
+		}
 	}
 	
 	loadNextConversationFromRequest() : void {

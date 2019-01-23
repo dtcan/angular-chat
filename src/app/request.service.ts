@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { getPlaceholderText, getUserId, getConvos, getConversation, getDateString, sendMessage, shouldUpdate } from './requests';
+import { getPlaceholderText, getUserId, getConvos, getConversation, sendMessage, shouldUpdate } from './requests';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +55,7 @@ export class RequestService {
 	
 	getConversationCallback(conversation : object[], noKeep : boolean) : void {
 		for(let i in conversation) {
-			conversation[i].inChain = (+i > 0 && conversation[i-1].author == conversation[i].author);
+			conversation[i].inChain = (+i > 0 && conversation[+i-1].author == conversation[i].author);
 		}
 		
 		if(this.lastConversation.length === 0 || noKeep) {
@@ -75,7 +75,7 @@ export class RequestService {
 		console.log("---");
 		for(let i in conversation) {
 			if(+i <= index) {
-				this.lastConversation[this.lastConversation.length + (i - index) - 1] = conversation[i];
+				this.lastConversation[this.lastConversation.length + (+i - index) - 1] = conversation[i];
 			}else {
 				this.lastConversation.push(conversation[i]);
 			}
@@ -93,10 +93,6 @@ export class RequestService {
 			this.lastConversation.unshift(m);
 		}
 		setTimeout(() => $('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight - distance), 0);
-	}
-	
-	getDateStringFromRequest(date : any) : string {
-		return getDateString(date);
 	}
 	
 	sendMessageFromRequest(message : string, conversationId : any) : boolean {

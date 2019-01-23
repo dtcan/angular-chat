@@ -7,7 +7,6 @@ import { RequestService } from './request.service';
 
 @Component({
   selector: 'app-root',
-  directives: [InfiniteScrollDirective],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -25,7 +24,7 @@ export class AppComponent implements OnInit {
 		let str = $('#message-input').val();
 		$('#message-input').val('');
 		if(str) {
-			if(this.request.sendMessageFromRequest(str, this.selection.activeConvo)) {
+			if(this.request.sendMessageFromRequest(<string>str, this.selection.activeConvo)) {
 				this.scrollDown();
 				this.update();
 			}

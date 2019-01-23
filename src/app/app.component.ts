@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
 	strInput() : void {
 		let str = $('#message-input').val();
 		$('#message-input').val('');
+		$('#message-input').blur();
 		if(str) {
 			if(this.request.sendMessageFromRequest(<string>str, this.selection.activeConvo)) {
 				this.scrollDown();

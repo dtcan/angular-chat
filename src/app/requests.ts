@@ -281,14 +281,13 @@ export function sendMessage(message : string, conversationId : any) : boolean {
 			id: testConversations[conversationId].length,
 			author: '',
 			content: message,
-			subcontent: 'Sent',
+			subcontent: 'Delivered',
 			time: (new Date()).toLocaleString(),
 			align: 'right'
 		});
-		setTimeout(() => { testConversations[conversationId][testConversations[conversationId].length - 1].subcontent = 'Delivered'; lastChecked[conversationId] = 0; }, 1000);
 		if(conversationId === 3) {
-			setTimeout(() => { testConversations[3][testConversations[3].length - 1].subcontent = 'Seen'; lastChecked[3] = 0; }, 3000);
-			setTimeout(() => { parrotTyping = true; lastChecked[3] = 0; }, 5000);
+			setTimeout(() => { testConversations[3][testConversations[3].length - 1].subcontent = 'Seen'; lastChecked[3] = 0; }, 2000);
+			setTimeout(() => { parrotTyping = true; lastChecked[3] = 0; }, 4000);
 			setTimeout(() => { testConversations[3].push({
 				id: testConversations[3].length,
 				author: 'ParrotBot',
@@ -296,7 +295,7 @@ export function sendMessage(message : string, conversationId : any) : boolean {
 				subcontent: 'Seen',
 				time: (new Date()).toLocaleString(),
 				align: 'left'
-			}); parrotTyping = false; }, 8000);
+			}); parrotTyping = false; }, 6000);
 		}
 	}else {
 		return false;

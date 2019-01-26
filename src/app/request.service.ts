@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { getPlaceholderText, getUserId, getConvos, getConversation, sendMessage, shouldUpdate } from './requests';
+import { getPlaceholderText, getUserId, getConvos, searchConvos, getConversation, sendMessage, shouldUpdate } from './requests';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class RequestService {
 	lastConvos : object[];
 	lastConversationId : any;
 	lastConversationPage : number = 0;
-	lastConversation : object[];
+	lastConversation : object[] = [];
 	
 	getPlaceholderFromRequest(conversationId : any) : string {
 		if(conversationId !== null) {
@@ -40,6 +40,18 @@ export class RequestService {
 		}
 	}
 	
+	searchConvosFromRequest(callback, searchTerm : string) : void {
+		searchConvos(((results) => this.searchConvosCallback(callback, results)).bind(this), getUserId(), searchTerm, 0);
+	}
+	
+	searchConvosCallback(callback, results : object[]) : void {
+		for (let result of results) {
+			result.safeImg = this.sanitizer.bypassSecurityTrustUrl(result.img);
+		}
+		
+		callback(results.length === 0 ? [null] : results);
+	}
+	
 	getConversationFromRequest(activeConvo : any, forceUpdate : boolean = false) : object[] {
 		if(activeConvo === null) {
 			this.lastConversationId = null;
@@ -60,7 +72,6 @@ export class RequestService {
 		
 		if(this.lastConversation.length === 0 || noKeep) {
 			this.lastConversation = conversation;
-			console.log("reset");
 			return;
 		}
 		
@@ -72,7 +83,6 @@ export class RequestService {
 			}
 		}
 		
-		console.log("---");
 		for(let i in conversation) {
 			if(+i <= index) {
 				this.lastConversation[this.lastConversation.length + (+i - index) - 1] = conversation[i];

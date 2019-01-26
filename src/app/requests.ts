@@ -176,40 +176,8 @@ let testConversations = [
 	]
 ];
 
-// END test section
-
-// Edit the functions below according to your implementation
-
-export function onConvoSelect(convo : object) : void {
-	// Called when a conversation is selected in the conversation list
-	// convo: a client-side representation of the conversation, which has the same attributes as given in getConvos
-	
-	if(convo.id !== 4) {
-		convo.emphasis = null;
-	}
-}
-
-export function getPlaceholderText(conversationId : any) : string {
-	// Return text to display in the input text box
-	
-	if(conversationId === 3 && parrotTyping) {
-		return 'ParrotBot is typing...';
-	}else {
-		return 'Say something...';
-	}
-}
-
-export function getUserId() : any {
-	// Return the id of the user currently logged in
-	
-	return 'me';
-}
-
-export function getConvos(callback, userId) : void {
-	// Call callback, with a list of conversations available to the current user as a parameter
-	// Conversations will be displayed as ordered here
-	
-	callback([
+function getTestConvos() {
+	return [
 		{
 			id: 0,
 			title: "You",
@@ -245,7 +213,74 @@ export function getConvos(callback, userId) : void {
 			img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==",
 			emphasis: "This convo is special"
 		}
-	]);
+	];
+}
+
+// END test section
+
+// Edit the functions below according to your implementation
+
+export function onConvoSelect(convo : object) : void {
+	// Called when a conversation is selected in the conversation list
+	// convo: a client-side representation of the conversation, which has the same attributes as given in getConvos
+	
+	if(convo.id !== 4) {
+		convo.emphasis = null;
+	}
+}
+
+export function getPlaceholderText(conversationId : any) : string {
+	// Return text to display in the input text box
+	
+	if(conversationId === 3 && parrotTyping) {
+		return 'ParrotBot is typing...';
+	}else {
+		return 'Say something...';
+	}
+}
+
+export function getUserId() : any {
+	// Return the id of the user currently logged in
+	
+	return 'me';
+}
+
+export function getConvos(callback, userId) : void {
+	// Call callback, with a list of conversations available to the current user as a parameter
+	// Conversations will be displayed as ordered here
+	
+	callback(getTestConvos());
+}
+
+export function searchConvos(callback, userId, searchTerm, pageNum) : void {
+	// Call callback, with a list of convos related to the given search term, as a parameter
+	// Search results will be displayed as ordered here
+	
+	let res = [];
+	
+	for(let convo of getTestConvos()) {
+		if(convo.title.toLowerCase().includes(searchTerm.toLowerCase()) || convo.subtitle.toLowerCase().includes(searchTerm.toLowerCase())) {
+			res.push(convo);
+			console.log(convo);
+			continue;
+		}
+		
+		let added = false;
+		for(let i in testConversations[convo.id]) {
+			let message = testConversations[convo.id][i];
+			if(message.content.toLowerCase().includes(searchTerm.toLowerCase()) || message.author.toLowerCase().includes(searchTerm.toLowerCase())) {
+				res.push(convo);
+				added = true;
+				break;
+			}
+		}
+		if(added) {
+			console.log(convo);
+			continue;
+		}
+	}
+	
+	callback(res);
 }
 
 export function getConversation(callback, userId, conversationId, pageNum) : void {

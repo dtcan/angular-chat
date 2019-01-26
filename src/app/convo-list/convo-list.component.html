@@ -1,5 +1,24 @@
 <ul class="no-padding list-group-flush overflow-hidden">
-	<li *ngFor="let convo of request.getConvosFromRequest()" class="list-group-item{{ mobile ? ' convo-padded' : '' }}{{ selection.activeConvo === convo.id ? ' active' : '' }}" (click)="selection.setActiveConvo(convo)">
-		<app-convo-single [convo]='convo'></app-convo-single>
+	<li class="list-group-item border-bottom-0">
+		<input (input)="setSearchTerm($event.target.value)" type="text" class="form-control rounded-pill pl-3 pr-3" id="search-bar" placeholder="Search" />
 	</li>
+	<div *ngIf="searchTerm === ''">
+		<li *ngFor="let convo of request.getConvosFromRequest()" class="list-group-item{{ mobile ? ' convo-padded' : '' }}{{ selection.activeConvo === convo.id ? ' active' : '' }}" (click)="selection.setActiveConvo(convo)">
+			<app-convo-single [convo]='convo'></app-convo-single>
+		</li>
+	</div>
+	<div *ngIf="searchTerm !== ''">
+		<li *ngIf="searchResults.length === 0" class="list-group-item">
+			<div class="d-flex justify-content-center">
+				<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>
+			</div>
+		</li>
+		<div *ngIf="searchResults.length !== 0 && searchResults[0] !== null">
+			<li class="list-group-item text-muted"><small>Conversations</small></li>
+			<li *ngFor="let result of searchResults" class="list-group-item{{ mobile ? ' convo-padded' : '' }}{{ selection.activeConvo === result.id ? ' active' : '' }}" (click)="selection.setActiveConvo(result)">
+				<app-convo-single *ngIf="result !== null" [convo]='result'></app-convo-single>
+			</li>
+		</div>
+		<li *ngIf="searchResults.length !== 0 && searchResults[0] === null" class="list-group-item text-center text-muted"><small>No results</small></li>
+	</div>
 </ul>

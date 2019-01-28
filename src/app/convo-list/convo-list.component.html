@@ -1,6 +1,7 @@
 <ul class="no-padding list-group-flush overflow-hidden">
-	<li class="list-group-item border-bottom-0">
-		<input (input)="setSearchTerm($event.target.value)" type="text" class="form-control rounded-pill pl-3 pr-3" id="search-bar" placeholder="Search" />
+	<li id="search-parent" class="list-group-item border-bottom-0">
+		<input (input)="setSearchTerm($event.target.value)" type="text" class="form-control rounded-pill pl-3 pr-5" id="search-bar" placeholder="Search" />
+		<span *ngIf="searchTerm !== ''" id="search-clear" (click)="clearSearch()"><i class="material-icons text-muted">close</i></span>
 	</li>
 	<div *ngIf="searchTerm === ''">
 		<li *ngFor="let convo of request.getConvosFromRequest()" class="list-group-item{{ mobile ? ' convo-padded' : '' }}{{ selection.activeConvo === convo.id ? ' active' : '' }}" (click)="selection.setActiveConvo(convo)">

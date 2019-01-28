@@ -21,6 +21,11 @@ export class ConvoListComponent implements OnInit {
 		this.request = request;
 	}
 	
+	clearSearch() {
+		$("#search-bar").val("");
+		this.setSearchTerm("");
+	}
+	
 	setSearchTerm(term) {
 		this.searchTerm = term;
 		this.searchResults = [];

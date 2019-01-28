@@ -14,7 +14,6 @@
 			</div>
 		</li>
 		<div *ngIf="searchResults.length !== 0 && searchResults[0] !== null">
-			<li class="list-group-item text-muted"><small>Conversations</small></li>
 			<li *ngFor="let result of searchResults" class="list-group-item{{ mobile ? ' convo-padded' : '' }}{{ selection.activeConvo === result.id ? ' active' : '' }}" (click)="selection.setActiveConvo(result)">
 				<app-convo-single *ngIf="result !== null" [convo]='result'></app-convo-single>
 			</li>

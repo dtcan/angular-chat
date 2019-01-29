@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 	}
 	
 	fixViewHeight() : void {
-		$('#conversation-view').css('height', $(window).height() - $('#text-input-div').outerHeight());
+		$('#conversation-view').css('height', $('#mobile-content').height() - $('#text-input-div').outerHeight());
 	}
 	
 	onConversationChange() : void {

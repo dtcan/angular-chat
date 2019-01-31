@@ -202,7 +202,7 @@ function getTestConvos() {
 		{
 			id: 3,
 			title: "💬 ParrotBot",
-			subtitle: (parrotTyping ? 'ParrotBot is typing...' : (testConversations[3][testConversations[3].length - 1].author ? '' : 'You: ') + testConversations[3][testConversations[3].length - 1].content),
+			subtitle: (parrotTyping ? '💬 ParrotBot is typing...' : (testConversations[3][testConversations[3].length - 1].author ? '' : 'You: ') + testConversations[3][testConversations[3].length - 1].content),
 			img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==",
 			emphasis: (lastRead[3] < testConversations[3].length - 1 ? 'New Message' : null)
 		},
@@ -229,11 +229,40 @@ export function onConvoSelect(convo : object) : void {
 	}
 }
 
+export function getHeader(conversationId : any) : object {
+	if(conversationId === null) {
+		return {
+			icon: "message",
+			title: "AngularChat",
+			subtitle: "",
+			options: []
+		};
+	}else if(conversationId === 4) {
+		return {
+			icon: "tag_faces",
+			title: "Infinite scrolling",
+			subtitle: "",
+			options: [
+				["Details", () => alert("Details")]
+			]
+		};
+	}else {
+		return {
+			icon: "",
+			title: getTestConvos()[conversationId].title,
+			subtitle: "",
+			options: [
+				["Details", () => alert("Details")]
+			]
+		};
+	}
+}
+
 export function getPlaceholderText(conversationId : any) : string {
 	// Return text to display in the input text box
 	
 	if(conversationId === 3 && parrotTyping) {
-		return 'ParrotBot is typing...';
+		return '💬 ParrotBot is typing...';
 	}else {
 		return 'Say something...';
 	}
@@ -325,7 +354,7 @@ export function sendMessage(message : string, conversationId : any) : boolean {
 			setTimeout(() => { parrotTyping = true; lastChecked[3] = 0; }, 4000);
 			setTimeout(() => { testConversations[3].push({
 				id: testConversations[3].length,
-				author: 'ParrotBot',
+				author: '💬 ParrotBot',
 				content: "Squawk! You just said: '" + message + "'",
 				subcontent: 'Seen',
 				time: (new Date()).toLocaleString(),

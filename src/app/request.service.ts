@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { getPlaceholderText, getUserId, getConvos, searchConvos, getConversation, sendMessage, shouldUpdate } from './requests';
+import { getHeader, getPlaceholderText, getUserId, getConvos, searchConvos, getConversation, sendMessage, shouldUpdate } from './requests';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,10 @@ export class RequestService {
 	lastConversationId : any;
 	lastConversationPage : number = 0;
 	lastConversation : object[] = [];
+	
+	getHeaderFromRequest(conversationId : any) : object {
+		return getHeader(conversationId);
+	}
 	
 	getPlaceholderFromRequest(conversationId : any) : string {
 		if(conversationId !== null) {

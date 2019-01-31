@@ -11,7 +11,7 @@ import { RequestService } from './request.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-	title : string;
+	header : object;
 	mobile : boolean = false;
 	selection : SelectionService;
 	request : RequestService;
@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
 		if(this.request.shouldUpdateFromRequest()) {
 			this.request.getConversationFromRequest(this.selection.activeConvo, true);
 			this.request.getConvosFromRequest(true);
+			this.header = this.request.getHeaderFromRequest(this.selection.activeConvo);
 		}
 	}
 	
@@ -53,6 +54,7 @@ export class AppComponent implements OnInit {
 	
 	onConversationChange() : void {
 		this.selection.activeMessage = null;
+		this.header = this.request.getHeaderFromRequest(this.selection.activeConvo);
 		$('#message-input').val('');
 		setTimeout(this.fixViewHeight, 0);
 		setTimeout(this.scrollDown, 0);
@@ -69,9 +71,9 @@ export class AppComponent implements OnInit {
 	}
 	
 	constructor(selection : SelectionService, request : RequestService) {
-		this.title = 'AngularChat';
 		this.selection = selection;
 		this.selection.onConversationChange = this.onConversationChange.bind(this);
 		this.request = request;
+		this.header = this.request.getHeaderFromRequest(null);
 	}
 }

@@ -10,6 +10,11 @@
 		<app-convo-list></app-convo-list>
 	</div>
 	<div *ngIf="(selection.activeConvo !== null || !mobile)" class="col h-100 p-0">
+		<nav *ngIf="(selection.activeConvo !== null && !mobile)" id="desktop-navbar" class="navbar-light bg-light">
+			<div class="container"><div class="row">
+			<div class="navbar-brand col text-center"><i *ngIf="header.icon" class="material-icons text-primary">{{ header.icon }}</i>&nbsp;{{ header.title }}</div>
+			</div></div>
+		</nav>
 		<div infinite-scroll [scrollWindow]="false" [infiniteScrollUpDistance]="3" (scrolledUp)="getNextPage()" id="conversation-view" class="scroll">
 			<app-conversation></app-conversation>
 		</div>

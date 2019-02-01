@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
 	fixViewHeight() : void {
 		let heightOffset = $('#text-input-div').outerHeight();
 		if(!this.mobile) {
+			console.log(this.mobile);
 			heightOffset += $('#desktop-navbar').outerHeight();
 		}
 		$('#conversation-view').css('height', $('#mobile-content').height() - heightOffset);
@@ -60,8 +61,8 @@ export class AppComponent implements OnInit {
 		this.selection.activeMessage = null;
 		this.header = this.request.getHeaderFromRequest(this.selection.activeConvo);
 		$('#message-input').val('');
-		setTimeout(this.fixViewHeight, 0);
-		setTimeout(this.scrollDown, 0);
+		setTimeout(this.fixViewHeight.bind(this), 0);
+		setTimeout(this.scrollDown.bind(this), 0);
 	}
 	
 	ngOnInit() {
@@ -69,8 +70,8 @@ export class AppComponent implements OnInit {
 		if(this.mobile) {
 			setTimeout(() => $('#mobile-content').css('padding-top', $('#mobile-navbar').height()), 0);
 		}
-		setTimeout(this.fixViewHeight, 0);
-		$(window).on('resize', this.fixViewHeight);
+		setTimeout(this.fixViewHeight.bind(this), 0);
+		$(window).on('resize', this.fixViewHeight.bind(this));
 		setInterval(this.update.bind(this), 1000);
 	}
 	

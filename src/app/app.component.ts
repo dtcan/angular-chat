@@ -51,7 +51,6 @@ export class AppComponent implements OnInit {
 	fixViewHeight() : void {
 		let heightOffset = $('#text-input-div').outerHeight();
 		if(!this.mobile) {
-			console.log(this.mobile);
 			heightOffset += $('#desktop-navbar').outerHeight();
 		}
 		$('#conversation-view').css('height', $('#mobile-content').height() - heightOffset);

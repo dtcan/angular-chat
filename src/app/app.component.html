@@ -6,7 +6,8 @@
 	</div></div>
 </nav>
 <div id="mobile-content" class="row vh-100 m-0">
-	<div class="no-padding{{ mobile ? ' col' : ' col-4' }} {{ (selection.activeConvo === null || !mobile) ? 'visible' : 'no-display' }} scroll">
+	<div infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="3" (scrolled)="getNextConvosPage()"
+		class="no-padding{{ mobile ? ' col' : ' col-4' }} {{ (selection.activeConvo === null || !mobile) ? 'visible' : 'no-display' }} scroll">
 		<app-convo-list></app-convo-list>
 	</div>
 	<div *ngIf="(selection.activeConvo !== null || !mobile)" class="col h-100 p-0">
@@ -15,7 +16,7 @@
 			<div class="navbar-brand col text-center"><i *ngIf="header.icon" class="material-icons text-primary">{{ header.icon }}</i>&nbsp;{{ header.title }}</div>
 			</div></div>
 		</nav>
-		<div infinite-scroll [scrollWindow]="false" [infiniteScrollUpDistance]="3" (scrolledUp)="getNextPage()" id="conversation-view" class="scroll">
+		<div infinite-scroll [scrollWindow]="false" [infiniteScrollUpDistance]="3" (scrolledUp)="getNextConversationPage()" id="conversation-view" class="scroll">
 			<app-conversation></app-conversation>
 		</div>
 		<div *ngIf="selection.activeConvo !== null" id="text-input-div" class="w-100 p-2 m-0 bg-light input-group{{ mobile ? ' fixed-bottom' : '' }}">

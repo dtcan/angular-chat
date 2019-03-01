@@ -177,7 +177,7 @@ let testConversations = [
 ];
 
 function getTestConvos() {
-	return [
+	let convos = [
 		{
 			id: 0,
 			title: "You",
@@ -214,6 +214,8 @@ function getTestConvos() {
 			emphasis: "This convo is special"
 		}
 	];
+	convos.push.apply(convos, convos);
+	return convos;
 }
 
 // END test section
@@ -274,7 +276,7 @@ export function getUserId() : any {
 	return 'me';
 }
 
-export function getConvos(callback, userId) : void {
+export function getConvos(callback, userId, pageNum) : void {
 	// Call callback, with a list of conversations available to the current user as a parameter
 	// Conversations will be displayed as ordered here
 	
@@ -290,7 +292,6 @@ export function searchConvos(callback, userId, searchTerm, pageNum) : void {
 	for(let convo of getTestConvos()) {
 		if(convo.title.toLowerCase().includes(searchTerm.toLowerCase()) || convo.subtitle.toLowerCase().includes(searchTerm.toLowerCase())) {
 			res.push(convo);
-			console.log(convo);
 			continue;
 		}
 		
@@ -304,7 +305,6 @@ export function searchConvos(callback, userId, searchTerm, pageNum) : void {
 			}
 		}
 		if(added) {
-			console.log(convo);
 			continue;
 		}
 	}

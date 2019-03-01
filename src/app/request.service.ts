@@ -10,6 +10,7 @@ export class RequestService {
 	sanitizer : DomSanitizer;
 	
 	lastUser : any;
+	lastConvosPage : number = 0;
 	lastConvos : object[];
 	lastConversationId : any;
 	lastConversationPage : number = 0;
@@ -31,7 +32,8 @@ export class RequestService {
 		let userId = getUserId();
 		if(this.lastUser !== userId || forceUpdate) {
 			this.lastUser = userId;
-			getConvos(this.getConvosCallback.bind(this), userId);
+			this.lastConvosPage = 0;
+			getConvos(this.getConvosCallback.bind(this), userId, this.lastConvosPage);
 		}
 		
 		return this.lastConvos;
@@ -42,6 +44,18 @@ export class RequestService {
 		for (let convo of this.lastConvos) {
 			convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
 		}
+	}
+	
+	loadNextConvosFromRequest() : void {
+		this.lastConvosPage++;
+		getConvos(this.loadNextConvosCallback.bind(this), getUserId(), this.lastConvosPage);
+	}
+	
+	loadNextConvosCallback(convos : object[]) : void {
+		for (let convo of convos) {
+			convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
+		}
+		this.lastConvos.push.apply(this.lastConvos, convos);
 	}
 	
 	searchConvosFromRequest(callback, searchTerm : string) : void {
@@ -103,9 +117,7 @@ export class RequestService {
 	
 	loadNextConversationCallback(conversation : object[]) : void {
 		let distance = $('#conversation-view')[0].scrollHeight - $('#conversation-view').scrollTop();
-		for(let m of conversation.reverse()) {
-			this.lastConversation.unshift(m);
-		}
+		this.lastConversation.unshift.apply(this.lastConversation, conversation)
 		setTimeout(() => $('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight - distance), 0);
 	}
 	

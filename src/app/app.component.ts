@@ -40,8 +40,12 @@ export class AppComponent implements OnInit {
 		}
 	}
 	
-	getNextPage() : void {
+	getNextConversationPage() : void {
 		this.request.loadNextConversationFromRequest();
+	}
+	
+	getNextConvosPage() : void {
+		this.request.loadNextConvosFromRequest();
 	}
 	
 	scrollDown() : void {

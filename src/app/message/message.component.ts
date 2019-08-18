@@ -12,25 +12,41 @@ const emojiRegex = /[\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{1f64f}\u
 export class MessageComponent {
 	
 	request : RequestService;
+	imgRatio: number;
 	
 	isEmoji(str) : boolean {
 		return (str.replace(emojiRegex, "") === "");
 	}
 	
+	imageLoad(args) : void {
+		this.imgRatio = args.target.naturalWidth / args.target.naturalHeight;
+	}
+	
 	getMessageStyle(message) : string {
-		let cls : string = !this.isEmoji(message.content) ? 'card ' : '';
-		
-		if(!this.isEmoji(message.content)) {
-			cls += message.align === 'right' ? 'bg-primary ' : 'bg-light ';
+		let cls : string = '';
+		switch(message.type) {
+			case 'text':
+				cls += !this.isEmoji(message.content) ? 'card mw-75' : '';
+				break;
+			case 'image':
+				const maxWidth : number = 75;
+				const maxHeight : number = 45;
+				cls += 'card msg-img mw-'+(Math.min(Math.round(this.imgRatio * (maxHeight/20)) * 20, maxWidth));
+				break;
 		}
-		cls += message.align === 'right' ? 'msg-fromyou ' : 'msg ';
-		cls += 'float-' + message.align;
+		
+		if(!(message.type === 'text') || !this.isEmoji(message.content)) {
+			cls += message.align === 'right' ? ' bg-primary' : ' bg-light';
+		}
+		cls += message.align === 'right' ? ' msg-fromyou' : ' msg';
+		cls += ' float-' + message.align;
 		
 		return cls;
 	}
 	
 	constructor(request : RequestService) {
 		this.request = request;
+		this.imgRatio = 0;
 	}
 	
 }

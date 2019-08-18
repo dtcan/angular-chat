@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Requests } from './requests';
 
@@ -53,7 +53,7 @@ export class RequestService {
 	
 	loadNextConvosCallback(convos : any[]) : void {
 		for (let convo of convos) {
-			convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
+			convo.safeImg = this.sanitizer.sanitize(SecurityContext.URL, convo.img);
 		}
 		this.lastConvos.push.apply(this.lastConvos, convos);
 	}
@@ -64,7 +64,7 @@ export class RequestService {
 	
 	searchConvosCallback(callback, results : any[]) : void {
 		for (let result of results) {
-			result.safeImg = this.sanitizer.bypassSecurityTrustUrl(result.img);
+			result.safeImg = this.sanitizer.sanitize(SecurityContext.URL, result.img);
 		}
 		
 		callback(results.length === 0 ? [null] : results);
@@ -84,9 +84,7 @@ export class RequestService {
 	}
 	
 	getConversationCallback(conversation : any[], noKeep : boolean) : void {
-		for(let i in conversation) {
-			conversation[i].inChain = (+i > 0 && conversation[+i-1].author == conversation[i].author);
-		}
+		this.prepareConversation(conversation);
 		
 		if(this.lastConversation.length === 0 || noKeep) {
 			this.lastConversation = conversation;
@@ -117,7 +115,7 @@ export class RequestService {
 	
 	loadNextConversationCallback(conversation : any[]) : void {
 		let distance = $('#conversation-view')[0].scrollHeight - $('#conversation-view').scrollTop();
-		this.lastConversation.unshift.apply(this.lastConversation, conversation)
+		this.lastConversation.unshift.apply(this.lastConversation, conversation);
 		setTimeout(() => $('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight - distance), 0);
 	}
 	
@@ -127,6 +125,16 @@ export class RequestService {
 	
 	shouldUpdateFromRequest() : boolean {
 		return Requests.shouldUpdate(Requests.getUserId());
+	}
+	
+	private prepareConversation(conversation : any[]) : void {
+		for(let i in conversation) {
+			conversation[i].inChain = (+i > 0 && conversation[+i-1].author == conversation[i].author);
+			if(conversation[i].type === 'image') {
+				conversation[i].safeContentUrl = this.sanitizer.sanitize(SecurityContext.URL, conversation[i].content);
+				conversation[i].safeContentStyle = this.sanitizer.sanitize(SecurityContext.STYLE, 'url('+conversation[i].content+')');
+			}
+		}
 	}
 	
 	constructor(sanitizer : DomSanitizer) {

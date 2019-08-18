@@ -2,9 +2,21 @@
 	<div class="col">
 		<div *ngIf="isActive" class="text-center text-muted"><small>{{ message.time }}</small><br /></div>
 		<span *ngIf="(message.author && !message.inChain)"><small class="float-{{ message.align }} text-muted">{{ message.author }}</small><br /></span>
-		<div style="max-width: 75%;" class="{{ getMessageStyle(message) }}">
-			<h1 *ngIf="isEmoji(message.content)">{{ message.content }}</h1>
-			<div *ngIf="!isEmoji(message.content)" class="card-body p-2">{{ message.content }}</div>
+		<div class="{{ getMessageStyle(message) }}" [style.background-image]="message.type === 'image' ? message.safeContentStyle : ''">
+			<ng-container [ngSwitch]="message.type">
+				<ng-container *ngSwitchCase="'text'">
+					<h1 *ngIf="isEmoji(message.content)">{{ message.content }}</h1>
+					<div *ngIf="!isEmoji(message.content)" class="card-body p-2">{{ message.content }}</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="'image'">
+					<div class="card-body msg-img p-0">
+						<img (load)="imageLoad($event)" class="w-100 invisible" [src]="message.safeContentUrl" />
+					</div>
+				</ng-container>
+				<ng-container *ngSwitchDefault>
+					<div class="card-body p-2">Unknown message type: {{ message.type }}</div>
+				</ng-container>
+			</ng-container>
 		</div>
 	</div>
 </div>

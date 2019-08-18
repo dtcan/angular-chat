@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 /*
  * Source: Independently Scrollable Bootstrap Columns, by Aneesh Kulkarni
  * https://codepen.io/aneekul/post/columnar-independence
@@ -26,4 +28,13 @@
 
 #mobile-navbar {
 	text-align: center;
+}
+
+.send-button {
+	background-color: $primary;
+	@if $primary-is-dark {
+		color: $light !important;
+	} @else {
+		color: $dark !important;
+	}
 }

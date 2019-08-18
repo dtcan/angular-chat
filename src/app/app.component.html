@@ -1,7 +1,7 @@
 <nav *ngIf="mobile" id="mobile-navbar" class="navbar-dark bg-dark fixed-top">
 	<div class="container text-light"><div class="row">
 		<div class="col float-left align-self-center"><a *ngIf="selection.activeConvo !== null" (click)="deselect()" class="material-icons">arrow_back</a></div>
-		<div class="navbar-brand col-auto align-self-center"><i *ngIf="header.icon" class="material-icons text-primary">{{ header.icon }}</i>&nbsp;{{ header.title }}</div>
+		<div class="navbar-brand col-auto align-self-center"><i *ngIf="header.icon" class="material-icons text-primary align-middle">{{ header.icon }}</i>&nbsp;{{ header.title }}</div>
 		<div class="col float-right align-self-center"></div>
 	</div></div>
 </nav>
@@ -13,7 +13,7 @@
 	<div *ngIf="(selection.activeConvo !== null || !mobile)" class="col h-100 p-0">
 		<nav *ngIf="(selection.activeConvo !== null && !mobile)" id="desktop-navbar" class="navbar-light bg-light">
 			<div class="container"><div class="row">
-			<div class="navbar-brand col text-center"><i *ngIf="header.icon" class="material-icons text-primary">{{ header.icon }}</i>&nbsp;{{ header.title }}</div>
+			<div class="navbar-brand col text-center"><i *ngIf="header.icon" class="material-icons text-primary align-middle">{{ header.icon }}</i>&nbsp;{{ header.title }}</div>
 			</div></div>
 		</nav>
 		<div infinite-scroll [scrollWindow]="false" [infiniteScrollUpDistance]="3" (scrolledUp)="getNextConversationPage()" id="conversation-view" class="scroll">
@@ -22,7 +22,7 @@
 		<div *ngIf="selection.activeConvo !== null" id="text-input-div" class="w-100 p-2 m-0 bg-light input-group{{ mobile ? ' fixed-bottom' : '' }}">
 			<input (keyup.enter)="strInput()" id="message-input" type="text" class="form-control" placeholder="{{ request.getPlaceholderFromRequest(selection.activeConvo) }}" />
 			<div class="input-group-append" (click)="strInput()">
-				<span class="input-group-text bg-primary text-light"><i class="material-icons">send</i></span>
+				<button class="input-group-text send-button"><i class="material-icons">send</i></button>
 			</div>
 		</div>
 	</div>

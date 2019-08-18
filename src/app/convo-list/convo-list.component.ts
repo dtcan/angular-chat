@@ -5,7 +5,7 @@ import { RequestService } from '../request.service';
 @Component({
   selector: 'app-convo-list',
   templateUrl: './convo-list.component.html',
-  styleUrls: ['./convo-list.component.css']
+  styleUrls: ['./convo-list.component.scss']
 })
 export class ConvoListComponent implements OnInit {
 	

@@ -6,7 +6,7 @@ const emojiRegex = /[\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{1f64f}\u
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
-  styleUrls: ['./message.component.css'],
+  styleUrls: ['./message.component.scss'],
   inputs: ['message', 'isActive']
 })
 export class MessageComponent {

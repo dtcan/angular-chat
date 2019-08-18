@@ -1,8 +1,8 @@
 <nav *ngIf="mobile" id="mobile-navbar" class="navbar-dark bg-dark fixed-top">
 	<div class="container text-light"><div class="row">
-		<div class="col float-left align-self-center"><a *ngIf="selection.activeConvo !== null" (click)="deselect()" class="material-icons">arrow_back</a></div>
+		<div class="col text-left align-self-center"><a *ngIf="selection.activeConvo !== null" (click)="deselect()" class="material-icons align-middle">arrow_back</a></div>
 		<div class="navbar-brand col-auto align-self-center"><i *ngIf="header.icon" class="material-icons text-primary align-middle">{{ header.icon }}</i>&nbsp;{{ header.title }}</div>
-		<div class="col float-right align-self-center"></div>
+		<div class="col text-right align-self-center"></div>
 	</div></div>
 </nav>
 <div id="mobile-content" class="row vh-100 m-0">

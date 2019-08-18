@@ -12,7 +12,6 @@ import { RequestService } from './request.service';
 })
 export class AppComponent implements OnInit {
 	header : object;
-	mobile : boolean = false;
 	selection : SelectionService;
 	request : RequestService;
 	
@@ -54,7 +53,6 @@ export class AppComponent implements OnInit {
 	
 	getViewHeight() : string {
 		let heightOffset = $('#text-input-div').outerHeight() + $('#desktop-navbar').outerHeight();
-		//$('#conversation-view').css('height', $('#mobile-content').height() - heightOffset);
 		return ($('#mobile-content').height() - heightOffset)+'px';
 	}
 	
@@ -70,7 +68,6 @@ export class AppComponent implements OnInit {
 	}
 	
 	ngOnInit() {
-		this.mobile = (window.screen.width < 1024);
 		setInterval(this.update.bind(this), 1000);
 	}
 	

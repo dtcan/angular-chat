@@ -42,7 +42,7 @@ export class RequestService {
 	getConvosCallback(convos : any[]) : void {
 		this.lastConvos = convos;
 		for (let convo of this.lastConvos) {
-			convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
+			convo.safeImg = this.sanitizer.sanitize(SecurityContext.URL, convo.img);
 		}
 	}
 	
@@ -114,9 +114,8 @@ export class RequestService {
 	}
 	
 	loadNextConversationCallback(conversation : any[]) : void {
-		let distance = $('#conversation-view')[0].scrollHeight - $('#conversation-view').scrollTop();
+		this.prepareConversation(conversation);
 		this.lastConversation.unshift.apply(this.lastConversation, conversation);
-		setTimeout(() => $('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight - distance), 0);
 	}
 	
 	sendMessageFromRequest(message : string, conversationId : any) : boolean {

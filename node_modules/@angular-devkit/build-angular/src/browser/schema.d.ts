@@ -5,6 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+
 export interface BrowserBuilderSchema {
   /**
    * List of static application assets.
@@ -235,6 +236,11 @@ export interface BrowserBuilderSchema {
    * Output profile events for Chrome profiler.
    */
   profile: boolean;
+
+  /**
+   * Enables conditionally loaded IE9-11 polyfills.
+   */
+  es5BrowserSupport: boolean;
 }
 
 export type OptimizationOptions = boolean | OptimizationObject;
@@ -409,6 +415,18 @@ export enum BudgetType {
 // Right now this normalization has to be done in all other builders that make use of the
 // BrowserBuildSchema and BrowserBuilder.buildWebpackConfig.
 // It would really help if it happens during architect.validateBuilderOptions, or similar.
+export interface NormalizedOptimization {
+  scripts: boolean;
+  styles: boolean;
+}
+
+export interface NormalizedSourceMaps {
+  scripts: boolean;
+  styles: boolean;
+  hidden: boolean;
+  vendor: boolean;
+}
+
 export interface NormalizedBrowserBuilderSchema extends
   Pick<
   BrowserBuilderSchema,

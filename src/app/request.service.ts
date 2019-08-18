@@ -11,12 +11,12 @@ export class RequestService {
 	
 	lastUser : any;
 	lastConvosPage : number = 0;
-	lastConvos : object[];
+	lastConvos : any[];
 	lastConversationId : any;
 	lastConversationPage : number = 0;
-	lastConversation : object[] = [];
+	lastConversation : any[] = [];
 	
-	getHeaderFromRequest(conversationId : any) : object {
+	getHeaderFromRequest(conversationId : any) : any {
 		return getHeader(conversationId);
 	}
 	
@@ -28,7 +28,7 @@ export class RequestService {
 		return "";
 	}
 	
-	getConvosFromRequest(forceUpdate : boolean = false) : object[] {
+	getConvosFromRequest(forceUpdate : boolean = false) : any[] {
 		let userId = getUserId();
 		if(this.lastUser !== userId || forceUpdate) {
 			this.lastUser = userId;
@@ -39,7 +39,7 @@ export class RequestService {
 		return this.lastConvos;
 	}
 	
-	getConvosCallback(convos : object[]) : void {
+	getConvosCallback(convos : any[]) : void {
 		this.lastConvos = convos;
 		for (let convo of this.lastConvos) {
 			convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
@@ -51,7 +51,7 @@ export class RequestService {
 		getConvos(this.loadNextConvosCallback.bind(this), getUserId(), this.lastConvosPage);
 	}
 	
-	loadNextConvosCallback(convos : object[]) : void {
+	loadNextConvosCallback(convos : any[]) : void {
 		for (let convo of convos) {
 			convo.safeImg = this.sanitizer.bypassSecurityTrustUrl(convo.img);
 		}
@@ -62,7 +62,7 @@ export class RequestService {
 		searchConvos(((results) => this.searchConvosCallback(callback, results)).bind(this), getUserId(), searchTerm, 0);
 	}
 	
-	searchConvosCallback(callback, results : object[]) : void {
+	searchConvosCallback(callback, results : any[]) : void {
 		for (let result of results) {
 			result.safeImg = this.sanitizer.bypassSecurityTrustUrl(result.img);
 		}
@@ -70,7 +70,7 @@ export class RequestService {
 		callback(results.length === 0 ? [null] : results);
 	}
 	
-	getConversationFromRequest(activeConvo : any, forceUpdate : boolean = false) : object[] {
+	getConversationFromRequest(activeConvo : any, forceUpdate : boolean = false) : any[] {
 		if(activeConvo === null) {
 			this.lastConversationId = null;
 			this.lastConversation = [];
@@ -83,7 +83,7 @@ export class RequestService {
 		return this.lastConversation;
 	}
 	
-	getConversationCallback(conversation : object[], noKeep : boolean) : void {
+	getConversationCallback(conversation : any[], noKeep : boolean) : void {
 		for(let i in conversation) {
 			conversation[i].inChain = (+i > 0 && conversation[+i-1].author == conversation[i].author);
 		}
@@ -115,7 +115,7 @@ export class RequestService {
 		getConversation(this.loadNextConversationCallback.bind(this), getUserId(), this.lastConversationId, this.lastConversationPage);
 	}
 	
-	loadNextConversationCallback(conversation : object[]) : void {
+	loadNextConversationCallback(conversation : any[]) : void {
 		let distance = $('#conversation-view')[0].scrollHeight - $('#conversation-view').scrollTop();
 		this.lastConversation.unshift.apply(this.lastConversation, conversation)
 		setTimeout(() => $('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight - distance), 0);

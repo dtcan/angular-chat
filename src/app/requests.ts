@@ -222,7 +222,7 @@ function getTestConvos() {
 
 // Edit the functions below according to your implementation
 
-export function onConvoSelect(convo : object) : void {
+export function onConvoSelect(convo : any) : void {
 	// Called when a conversation is selected in the conversation list
 	// convo: a client-side representation of the conversation, which has the same attributes as given in getConvos
 	
@@ -231,7 +231,7 @@ export function onConvoSelect(convo : object) : void {
 	}
 }
 
-export function getHeader(conversationId : any) : object {
+export function getHeader(conversationId : any) : any {
 	if(conversationId === null) {
 		return {
 			icon: "message",

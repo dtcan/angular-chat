@@ -6,3 +6,11 @@ $light:         #f8f9fa;
 $dark:          #343a40;
 
 $font-family-sans-serif:      "Open Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);

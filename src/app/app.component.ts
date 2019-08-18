@@ -52,29 +52,25 @@ export class AppComponent implements OnInit {
 		$('#conversation-view').scrollTop($('#conversation-view')[0].scrollHeight);
 	}
 	
-	fixViewHeight() : void {
-		let heightOffset = $('#text-input-div').outerHeight();
-		if(!this.mobile) {
-			heightOffset += $('#desktop-navbar').outerHeight();
-		}
-		$('#conversation-view').css('height', $('#mobile-content').height() - heightOffset);
+	getViewHeight() : string {
+		let heightOffset = $('#text-input-div').outerHeight() + $('#desktop-navbar').outerHeight();
+		//$('#conversation-view').css('height', $('#mobile-content').height() - heightOffset);
+		return ($('#mobile-content').height() - heightOffset)+'px';
+	}
+	
+	getPaddingTop() : string {
+		return $('#mobile-navbar').height()+'px';
 	}
 	
 	onConversationChange() : void {
 		this.selection.activeMessage = null;
 		this.header = this.request.getHeaderFromRequest(this.selection.activeConvo);
 		$('#message-input').val('');
-		setTimeout(this.fixViewHeight.bind(this), 0);
 		setTimeout(this.scrollDown.bind(this), 0);
 	}
 	
 	ngOnInit() {
 		this.mobile = (window.screen.width < 1024);
-		if(this.mobile) {
-			setTimeout(() => $('#mobile-content').css('padding-top', $('#mobile-navbar').height()), 0);
-		}
-		setTimeout(this.fixViewHeight.bind(this), 0);
-		$(window).on('resize', this.fixViewHeight.bind(this));
 		setInterval(this.update.bind(this), 1000);
 	}
 	

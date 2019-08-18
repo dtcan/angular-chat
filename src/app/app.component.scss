@@ -38,3 +38,16 @@
 		color: $dark !important;
 	}
 }
+
+fixed-bottom-md {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1030;
+}
+@media(min-width: map-get($grid-breakpoints, md)) {
+	fixed-bottom-md {
+		position: static;
+	}
+}

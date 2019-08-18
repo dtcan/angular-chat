@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { getHeader, getPlaceholderText, getUserId, getConvos, searchConvos, getConversation, sendMessage, shouldUpdate } from './requests';
+import { Requests } from './requests';
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +17,23 @@ export class RequestService {
 	lastConversation : any[] = [];
 	
 	getHeaderFromRequest(conversationId : any) : any {
-		return getHeader(conversationId);
+		return Requests.getHeader(conversationId);
 	}
 	
 	getPlaceholderFromRequest(conversationId : any) : string {
 		if(conversationId !== null) {
-			return getPlaceholderText(conversationId);
+			return Requests.getPlaceholderText(conversationId);
 		}
 		
 		return "";
 	}
 	
 	getConvosFromRequest(forceUpdate : boolean = false) : any[] {
-		let userId = getUserId();
+		let userId = Requests.getUserId();
 		if(this.lastUser !== userId || forceUpdate) {
 			this.lastUser = userId;
 			this.lastConvosPage = 0;
-			getConvos(this.getConvosCallback.bind(this), userId, this.lastConvosPage);
+			Requests.getConvos(this.getConvosCallback.bind(this), userId, this.lastConvosPage);
 		}
 		
 		return this.lastConvos;
@@ -48,7 +48,7 @@ export class RequestService {
 	
 	loadNextConvosFromRequest() : void {
 		this.lastConvosPage++;
-		getConvos(this.loadNextConvosCallback.bind(this), getUserId(), this.lastConvosPage);
+		Requests.getConvos(this.loadNextConvosCallback.bind(this), Requests.getUserId(), this.lastConvosPage);
 	}
 	
 	loadNextConvosCallback(convos : any[]) : void {
@@ -59,7 +59,7 @@ export class RequestService {
 	}
 	
 	searchConvosFromRequest(callback, searchTerm : string) : void {
-		searchConvos(((results) => this.searchConvosCallback(callback, results)).bind(this), getUserId(), searchTerm, 0);
+		Requests.searchConvos(((results) => this.searchConvosCallback(callback, results)).bind(this), Requests.getUserId(), searchTerm, 0);
 	}
 	
 	searchConvosCallback(callback, results : any[]) : void {
@@ -76,7 +76,7 @@ export class RequestService {
 			this.lastConversation = [];
 		}else if(this.lastConversationId !== activeConvo || forceUpdate) {
 			this.lastConversationPage = 0;
-			getConversation(((c) => this.getConversationCallback(c, this.lastConversationId !== activeConvo)).bind(this), getUserId(), activeConvo, this.lastConversationPage);
+			Requests.getConversation(((c) => this.getConversationCallback(c, this.lastConversationId !== activeConvo)).bind(this), Requests.getUserId(), activeConvo, this.lastConversationPage);
 			this.lastConversationId = activeConvo;
 		}
 		
@@ -112,7 +112,7 @@ export class RequestService {
 	
 	loadNextConversationFromRequest() : void {
 		this.lastConversationPage++;
-		getConversation(this.loadNextConversationCallback.bind(this), getUserId(), this.lastConversationId, this.lastConversationPage);
+		Requests.getConversation(this.loadNextConversationCallback.bind(this), Requests.getUserId(), this.lastConversationId, this.lastConversationPage);
 	}
 	
 	loadNextConversationCallback(conversation : any[]) : void {
@@ -122,11 +122,11 @@ export class RequestService {
 	}
 	
 	sendMessageFromRequest(message : string, conversationId : any) : boolean {
-		return sendMessage(message, conversationId);
+		return Requests.sendMessage(message, conversationId);
 	}
 	
 	shouldUpdateFromRequest() : boolean {
-		return shouldUpdate(getUserId());
+		return Requests.shouldUpdate(Requests.getUserId());
 	}
 	
 	constructor(sanitizer : DomSanitizer) {

@@ -220,163 +220,166 @@ function getTestConvos() {
 
 // END test section
 
-// Edit the functions below according to your implementation
+export namespace Requests {
+	// Edit the functions below according to your implementation
 
-export function onConvoSelect(convo : any) : void {
-	// Called when a conversation is selected in the conversation list
-	// convo: a client-side representation of the conversation, which has the same attributes as given in getConvos
-	
-	if(convo.id !== 4) {
-		convo.emphasis = null;
-	}
-}
-
-export function getHeader(conversationId : any) : any {
-	if(conversationId === null) {
-		return {
-			icon: "message",
-			title: "AngularChat",
-			subtitle: "",
-			options: []
-		};
-	}else if(conversationId === 4) {
-		return {
-			icon: "tag_faces",
-			title: "Infinite scrolling",
-			subtitle: "",
-			options: [
-				["Details", () => alert("Details")]
-			]
-		};
-	}else {
-		return {
-			icon: "",
-			title: getTestConvos()[conversationId].title,
-			subtitle: "",
-			options: [
-				["Details", () => alert("Details")]
-			]
-		};
-	}
-}
-
-export function getPlaceholderText(conversationId : any) : string {
-	// Return text to display in the input text box
-	
-	if(conversationId === 3 && parrotTyping) {
-		return '💬 ParrotBot is typing...';
-	}else {
-		return 'Say something...';
-	}
-}
-
-export function getUserId() : any {
-	// Return the id of the user currently logged in
-	
-	return 'me';
-}
-
-export function getConvos(callback, userId, pageNum) : void {
-	// Call callback, with a list of conversations available to the current user as a parameter
-	// Conversations will be displayed as ordered here
-	
-	callback(getTestConvos());
-}
-
-export function searchConvos(callback, userId, searchTerm, pageNum) : void {
-	// Call callback, with a list of convos related to the given search term, as a parameter
-	// Search results will be displayed as ordered here
-	
-	let res = [];
-	
-	for(let convo of getTestConvos()) {
-		if(convo.title.toLowerCase().includes(searchTerm.toLowerCase()) || convo.subtitle.toLowerCase().includes(searchTerm.toLowerCase())) {
-			res.push(convo);
-			continue;
-		}
+	export function onConvoSelect(convo : any) : void {
+		// Called when a conversation is selected in the conversation list
+		// convo: a client-side representation of the conversation, which has the same attributes as given in getConvos
 		
-		let added = false;
-		for(let i in testConversations[convo.id]) {
-			let message = testConversations[convo.id][i];
-			if(message.content.toLowerCase().includes(searchTerm.toLowerCase()) || message.author.toLowerCase().includes(searchTerm.toLowerCase())) {
+		if(convo.id !== 4) {
+			convo.emphasis = null;
+		}
+	}
+
+	export function getHeader(conversationId : any) : any {
+		if(conversationId === null) {
+			return {
+				icon: "message",
+				title: "AngularChat",
+				subtitle: "",
+				options: []
+			};
+		}else if(conversationId === 4) {
+			return {
+				icon: "tag_faces",
+				title: "Infinite scrolling",
+				subtitle: "",
+				options: [
+					["Details", () => alert("Details")]
+				]
+			};
+		}else {
+			return {
+				icon: "",
+				title: getTestConvos()[conversationId].title,
+				subtitle: "",
+				options: [
+					["Details", () => alert("Details")]
+				]
+			};
+		}
+	}
+
+	export function getPlaceholderText(conversationId : any) : string {
+		// Return text to display in the input text box
+		
+		if(conversationId === 3 && parrotTyping) {
+			return '💬 ParrotBot is typing...';
+		}else {
+			return 'Say something...';
+		}
+	}
+
+	export function getUserId() : any {
+		// Return the id of the user currently logged in
+		
+		return 'me';
+	}
+
+	export function getConvos(callback, userId, pageNum) : void {
+		// Call callback, with a list of conversations available to the current user as a parameter
+		// Conversations will be displayed as ordered here
+		
+		callback(getTestConvos());
+	}
+
+	export function searchConvos(callback, userId, searchTerm, pageNum) : void {
+		// Call callback, with a list of convos related to the given search term, as a parameter
+		// Search results will be displayed as ordered here
+		
+		let res = [];
+		
+		for(let convo of getTestConvos()) {
+			if(convo.title.toLowerCase().includes(searchTerm.toLowerCase()) || convo.subtitle.toLowerCase().includes(searchTerm.toLowerCase())) {
 				res.push(convo);
-				added = true;
-				break;
+				continue;
+			}
+			
+			let added = false;
+			for(let i in testConversations[convo.id]) {
+				let message = testConversations[convo.id][i];
+				if(message.content.toLowerCase().includes(searchTerm.toLowerCase()) || message.author.toLowerCase().includes(searchTerm.toLowerCase())) {
+					res.push(convo);
+					added = true;
+					break;
+				}
+			}
+			if(added) {
+				continue;
 			}
 		}
-		if(added) {
-			continue;
-		}
+		
+		callback(res);
 	}
-	
-	callback(res);
-}
 
-export function getConversation(callback, userId, conversationId, pageNum) : void {
-	// Call callback, with a list of the messages in the requested conversation as a parameter
-	// Messages will be displayed as ordered here
-	
-	let arr = [];
-	if(conversationId === 4) {
-		for(var i = 50; i >= 1; i--) {
-			arr.push({
-				id: (50 * pageNum) + i,
+	export function getConversation(callback, userId, conversationId, pageNum) : void {
+		// Call callback, with a list of the messages in the requested conversation as a parameter
+		// Messages will be displayed as ordered here
+		
+		let arr = [];
+		if(conversationId === 4) {
+			for(var i = 50; i >= 1; i--) {
+				arr.push({
+					id: (50 * pageNum) + i,
+					author: '',
+					content: 'This is Message ' + ((50 * pageNum) + i),
+					subcontent: 'Message ' + ((50 * pageNum) + i),
+					time: ((50 * pageNum) + i) + ' days ago',
+					align: 'right'
+				});
+			}
+		}else if(pageNum === 0) {
+			lastRead[conversationId] = testConversations[conversationId].length - 1;
+			arr = $.extend(true, [], testConversations[conversationId]);
+		}
+		
+		callback(arr);
+	}
+
+	export function sendMessage(message : string, conversationId : any) : boolean {
+		// Send the given message from the current user in the given conversation
+		// Return true if successful
+		
+		if(conversationId !== 4) {
+			testConversations[conversationId].push({
+				id: testConversations[conversationId].length,
 				author: '',
-				content: 'This is Message ' + ((50 * pageNum) + i),
-				subcontent: 'Message ' + ((50 * pageNum) + i),
-				time: ((50 * pageNum) + i) + ' days ago',
+				content: message,
+				subcontent: 'Delivered',
+				time: (new Date()).toLocaleString(),
 				align: 'right'
 			});
+			if(conversationId === 3) {
+				setTimeout(() => { testConversations[3][testConversations[3].length - 1].subcontent = 'Seen'; lastChecked[3] = 0; }, 2000);
+				setTimeout(() => { parrotTyping = true; lastChecked[3] = 0; }, 4000);
+				setTimeout(() => { testConversations[3].push({
+					id: testConversations[3].length,
+					author: '💬 ParrotBot',
+					content: "Squawk! You just said: '" + message + "'",
+					subcontent: 'Seen',
+					time: (new Date()).toLocaleString(),
+					align: 'left'
+				}); parrotTyping = false; }, 6000);
+			}
+		}else {
+			return false;
 		}
-	}else if(pageNum === 0) {
-		lastRead[conversationId] = testConversations[conversationId].length - 1;
-		arr = $.extend(true, [], testConversations[conversationId]);
+		
+		return true;
 	}
-	
-	callback(arr);
-}
 
-export function sendMessage(message : string, conversationId : any) : boolean {
-	// Send the given message from the current user in the given conversation
-	// Return true if successful
-	
-	if(conversationId !== 4) {
-		testConversations[conversationId].push({
-			id: testConversations[conversationId].length,
-			author: '',
-			content: message,
-			subcontent: 'Delivered',
-			time: (new Date()).toLocaleString(),
-			align: 'right'
-		});
-		if(conversationId === 3) {
-			setTimeout(() => { testConversations[3][testConversations[3].length - 1].subcontent = 'Seen'; lastChecked[3] = 0; }, 2000);
-			setTimeout(() => { parrotTyping = true; lastChecked[3] = 0; }, 4000);
-			setTimeout(() => { testConversations[3].push({
-				id: testConversations[3].length,
-				author: '💬 ParrotBot',
-				content: "Squawk! You just said: '" + message + "'",
-				subcontent: 'Seen',
-				time: (new Date()).toLocaleString(),
-				align: 'left'
-			}); parrotTyping = false; }, 6000);
+	export function shouldUpdate(userId : any) : boolean {
+		// Return true if the UI needs to be updated with new information (ie. messages)
+		
+		for(let i in testConversations) {
+			if(lastChecked[i] < testConversations[i].length - 1) {
+				lastChecked[i] = testConversations[i].length - 1;
+				return true;
+			}
 		}
-	}else {
+		
 		return false;
 	}
-	
-	return true;
-}
 
-export function shouldUpdate(userId : any) : boolean {
-	// Return true if the UI needs to be updated with new information (ie. messages)
-	
-	for(let i in testConversations) {
-		if(lastChecked[i] < testConversations[i].length - 1) {
-			lastChecked[i] = testConversations[i].length - 1;
-			return true;
-		}
-	}
-	
-	return false;
 }

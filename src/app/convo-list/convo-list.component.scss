@@ -1,4 +1,14 @@
+@import "../../_variables.scss";
+
 .convo-padded {
 	padding-left: 15px;
 	padding-right: 15px;
+}
+
+.list-group-item.active {
+	@if $primary-is-dark {
+		color: $light !important;
+	} @else {
+		color: $dark !important;
+	}
 }

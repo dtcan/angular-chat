@@ -23,7 +23,7 @@ export class MessageComponent {
 		if(!this.isEmoji(message.content)) {
 			cls += message.align === 'right' ? 'bg-primary ' : 'bg-light ';
 		}
-		cls += message.align === 'right' ? 'text-light ' : 'text-dark ';
+		cls += message.align === 'right' ? 'msg-fromyou ' : 'msg ';
 		cls += 'float-' + message.align;
 		
 		return cls;

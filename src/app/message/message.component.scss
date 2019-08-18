@@ -1,0 +1,13 @@
+@import "../../_variables.scss";
+
+.msg {
+	color: $dark !important;
+}
+
+.msg-fromyou {
+	@if $primary-is-dark {
+		color: $light !important;
+	} @else {
+		color: $dark !important;
+	}
+}
